@@ -34,12 +34,17 @@
   <ItemGroup>
     <Compile Include="Board.cs" />
     <Compile Include="Cell.cs" />
-    <Compile Include="Controller.cs" />
     <Compile Include="GameManager.cs" />
+    <Compile Include="GameUtilities.cs" />
     <Compile Include="HumanPlayer.cs" />
     <Compile Include="PcPlayer.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="UI.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="Ex02.ConsoleUtils">
+      <HintPath>..\..\..\..\..\..\Temp\Ex02.ConsoleUtils.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

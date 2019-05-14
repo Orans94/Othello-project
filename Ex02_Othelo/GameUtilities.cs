@@ -4,7 +4,8 @@ using System.Text;
 
 namespace Ex02_Othelo
 {
-    class Controller
+    class GameUtilities
     {
+        public enum PlayerColor { BLACK_PLAYER, WHITE_PLAYER };
     }
 }

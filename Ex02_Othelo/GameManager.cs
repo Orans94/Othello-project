@@ -7,7 +7,7 @@ namespace Ex02_Othelo
     class GameManager
     {
         public enum GameMode { HUMAN_VS_HUMAN, HUMAN_VS_PC };
-        public enum PlayerColor { BLACK_PLAYER, WHITE_PLAYER };
+        //public enum PlayerColor { BLACK_PLAYER, WHITE_PLAYER };
 
         private Board m_GameBoard;
         private List<Cell> m_BlackPlayerOptions;
@@ -18,6 +18,7 @@ namespace Ex02_Othelo
         public static void Run()
         {
             //this method maintains the main loop of the game.
+
         }
 
         public Board GameBoard
@@ -34,7 +35,7 @@ namespace Ex02_Othelo
             //this method is updating the players options.
         }
 
-        public PlayerColor Turn
+        public GameUtilities.PlayerColor Turn
         {
             //a propertie for m_PlayerTurn
             get
@@ -67,12 +68,12 @@ namespace Ex02_Othelo
             //this method recieves a player move and return true if the move is blocking the enemy.
         }
 
-        private bool isPlayerOptionEmpty(PlayerColor i_PlayerColor)
+        private bool isPlayerOptionEmpty(GameUtilities.PlayerColor i_PlayerColor)
         {
             //this method recieve a PlayerColor and check if his options list is empty.
             bool isOptionListEmpty;
 
-            if (i_PlayerColor == PlayerColor.BLACK_PLAYER)
+            if (i_PlayerColor == GameUtilities.PlayerColor.BLACK_PLAYER)
             {
                 isOptionListEmpty = m_BlackPlayerOptions.Count == 0;
             }
@@ -90,7 +91,7 @@ namespace Ex02_Othelo
             //this method checks if the game is over(if both of the players has no options to play).
             bool doesBothPlayersHasNoOptions;
 
-            doesBothPlayersHasNoOptions = isPlayerOptionEmpty(PlayerColor.BLACK_PLAYER) && isPlayerOptionEmpty(PlayerColor.WHITE_PLAYER);
+            doesBothPlayersHasNoOptions = isPlayerOptionEmpty(GameUtilities.PlayerColor.BLACK_PLAYER) && isPlayerOptionEmpty(PlayerColor.WHITE_PLAYER);
 
             return doesBothPlayersHasNoOptions;
         }
@@ -109,7 +110,6 @@ namespace Ex02_Othelo
         }
         private void convertPlayerMoveFromStringToIndices(out int o_PlayerMoveRowIndex, out int o_PlayerMoveColumnIndex, string i_PlayerMoveString)
         {
-            bool isParseSucceeded;
             int rowIndex, columnIndex;
 
             rowIndex = i_PlayerMoveString[1] - '1';
@@ -123,17 +123,17 @@ namespace Ex02_Othelo
         private void determineWinner()
         {
             int whitePlayerScore, blackPlayerScore;
-            PlayerColor winner;
+            GameUtilities.PlayerColor winner;
 
             whitePlayerScore = m_GameBoard.CountSignAppearances('O');
             blackPlayerScore = m_GameBoard.CountSignAppearances('X');
             if (whitePlayerScore > blackPlayerScore)
             {
-                winner = PlayerColor.WHITE_PLAYER;
+                winner = GameUtilities.PlayerColor.WHITE_PLAYER;
             }
             else
             {
-                winner = PlayerColor.BLACK_PLAYER;
+                winner = GameUtilities.PlayerColor.BLACK_PLAYER;
             }
             UI.DeclareWinner(whitePlayerScore, blackPlayerScore, winner);
         }

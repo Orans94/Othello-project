@@ -7,6 +7,8 @@ namespace Ex02_Othelo
     class PcPlayer
     {
         private string m_PlayerName = "PC";
+        GameUtilities.PlayerColor m_PlayerColor;
+
 
         public string Play(List<Cell> i_PcPlayerOptions)
         {

@@ -17,10 +17,54 @@ namespace Ex02_Othelo
             Ex02.ConsoleUtils.Screen.Clear();
         }
 
-        public static void Draw(ref Board i_GameBoard)
+        public static void Draw(ref Board i_GameBoard,Board.eBoardSize i_BoardSize)
         {
             //this method recieves a board and drawing it.
-            
+            StringBuilder stringBuilder = new StringBuilder("", 36);
+
+            printFirstLine(i_BoardSize);
+            printLineOfEqualSign(i_BoardSize);
+            for(int i=1; i<(int)i_BoardSize; i++)
+            {
+                printBoardRowData(i_GameBoard, i);
+            }
+        }
+
+        private static void printBoardRowData(Board i_GameBoard, int i_RowIndex)
+        {
+            StringBuilder sb = new StringBuilder("", 36);
+            if(i_GameBoard.Size == Board.eBoardSize.bigBoard)
+            {
+                sb.AppendFormat("{0} | {1} | {2} | {3} | {4} | {5} | {6} | {7} | {8} |", i_RowIndex, i_GameBoard.Matrix[i_RowIndex, 1],
+                     i_GameBoard.Matrix[i_RowIndex, 2], i_GameBoard.Matrix[i_RowIndex, 3], i_GameBoard.Matrix[i_RowIndex, 4], i_GameBoard.Matrix[i_RowIndex, 5],
+                     i_GameBoard.Matrix[i_RowIndex, 6], i_GameBoard.Matrix[i_RowIndex, 7], i_GameBoard.Matrix[i_RowIndex, 8]);
+            }
+            else
+            {
+                sb.AppendFormat("{0} | {1} | {2} | {3} | {4} | {5} | {6} |", i_RowIndex);
+            }
+        }
+        private static void printFirstLine(Board.eBoardSize boardSize)
+        {
+            if(boardSize == Board.eBoardSize.bigBoard)
+            {
+                Console.WriteLine("    A   B   C   D   E   F   G   H  ");
+            }
+            else
+            {
+                Console.WriteLine("    A   B   C   D   E   F  ");
+            }
+        }
+        private static void printLineOfEqualSign(Board.eBoardSize boardSize)
+        {
+            if(boardSize == Board.eBoardSize.bigBoard)
+            {
+                Console.WriteLine("=================================");
+            }
+            else
+            {
+                Console.WriteLine("======================== ");
+            }
         }
 
         public static string AskForUserName()
@@ -56,23 +100,42 @@ namespace Ex02_Othelo
             return userBoardSizeChoice;
         }
 
-        public static void RequestPlayerToPlay(PlayerTurn i_PlayerTurn)
+        public static string RequestPlayerToPlay(GameUtilities.PlayerColor i_PlayerTurn)
         {
             //this method is recieving the player that should play now and asking the player to play
+            bool isMoveValidate;
+            string playerMoveInput, currentPlayer;
+            
+
+            if (i_PlayerTurn == GameUtilities.PlayerColor.BLACK_PLAYER)
+            {
+                currentPlayer = "Black player";
+            }
+            else
+            {
+                currentPlayer = "White player";
+            }
+
+
+            Console.WriteLine(string.Format("{0}, please play your turn.", currentPlayer));
+            playerMoveInput = Console.ReadLine();
+            
+            
+
         }
 
         public static void RequestValidMove()
         {
             //this method is informing the user that the move isn't valid and asking the user for a valid move
-            Console.WriteLine("The move is not valid, please enter a valid move", Environment.NewLine);
+            Console.WriteLine("The move is not valid, please enter a valid move");
         }
 
-        public static void InformTurnHasBeenChanged(PlayerColor i_PlayerTurn)
+        public static void InformTurnHasBeenChanged(GameUtilities.PlayerColor i_PlayerTurn)
         {
             //this method is informing the players that the turn has been changed.
         }
 
-        public static void DeclareWinner(int i_WhiteScore, int i_BlackScore, PlayerColor i_WinnerColor, string i_WinnerName)
+        public static void DeclareWinner(int i_WhiteScore, int i_BlackScore, GameUtilities.PlayerColor i_WinnerColor)
         {
             //this method is printing a game over message, which contains the scores of both of the players and the winner name and color.
         }
@@ -93,5 +156,6 @@ namespace Ex02_Othelo
             //this method is printing an exit message
             Console.WriteLine("Thank you for playing Othello{0}", Environment.NewLine);
         }
+
     }
 }
