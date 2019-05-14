@@ -1,24 +1,52 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-
 namespace Ex02_Othelo
 {
     class GameManager
     {
-        public enum GameMode { HUMAN_VS_HUMAN, HUMAN_VS_PC };
+        public enum GameMode {HUMAN_VS_HUMAN = 1, HUMAN_VS_PC = 2};
+        public enum GameDecision{REMATCH = 1, EXIT = 2};
         //public enum PlayerColor { BLACK_PLAYER, WHITE_PLAYER };
 
         private Board m_GameBoard;
-        private List<Cell> m_BlackPlayerOptions;
-        private List<Cell> m_WhitePlayerOptions;
-        private PlayerColor m_PlayerTurn;
+        private LinkedList<Cell> m_BlackPlayerOptions;
+        private LinkedList<Cell> m_WhitePlayerOptions;
+        private GameUtilities.PlayerColor m_PlayerTurn;
         private GameMode m_GameMode;
 
-        public static void Run()
+        public void Run()
         {
+            string blackPlayerName = "PC", whitePlayerName;
+            GameMode userGameModeChoice;
+            Board.eBoardSize userBoardSizeChoice;
             //this method maintains the main loop of the game.
 
+            // 1. Ask user name
+            whitePlayerName = UI.AskUserForUserName();
+
+            // 2. Ask for gamemode
+            userGameModeChoice = UI.AskUserForGameMode();
+            //      2.1 if the user chose human vs human than enter second player name.
+            if(userGameModeChoice == GameMode.HUMAN_VS_HUMAN)
+            {
+                blackPlayerName = UI.AskUserForUserName();
+            }
+            // 3. Choose matrix size
+            userBoardSizeChoice = UI.AskUserForBoardSize();
+            //      3.1 make m_GameBoard according to user board size choice
+            m_GameBoard = new Board(userBoardSizeChoice);
+            // 4. Initialize board
+            m_GameBoard.Initialize();
+            // 5. Draw
+            UI.Draw(m_GameBoard);
+            // start the main loop of the game:
+            //6. ask player to play
+            //7.check if the play is legal(blocking enemy)
+            //  7.1 if not legal, ask for a new move
+            //  7.2 if legal, update options and update board
+
+           
         }
 
         public Board GameBoard
@@ -30,7 +58,7 @@ namespace Ex02_Othelo
             }
         }
         
-        private void updatePlayersOptions(Board i_GameBoard, List<Cell> i_BlackPlayerOption, List<Cell> i_WhitePlayerOptions)
+        private void updatePlayersOptions(Board i_GameBoard, LinkedList<Cell> i_BlackPlayerOption, LinkedList<Cell> i_WhitePlayerOptions)
         {
             //this method is updating the players options.
         }
@@ -66,6 +94,7 @@ namespace Ex02_Othelo
         private bool isPlayerMoveBlockingEnemy(string i_PlayerMove)
         {
             //this method recieves a player move and return true if the move is blocking the enemy.
+            return true;
         }
 
         private bool isPlayerOptionEmpty(GameUtilities.PlayerColor i_PlayerColor)
@@ -91,7 +120,7 @@ namespace Ex02_Othelo
             //this method checks if the game is over(if both of the players has no options to play).
             bool doesBothPlayersHasNoOptions;
 
-            doesBothPlayersHasNoOptions = isPlayerOptionEmpty(GameUtilities.PlayerColor.BLACK_PLAYER) && isPlayerOptionEmpty(PlayerColor.WHITE_PLAYER);
+            doesBothPlayersHasNoOptions = isPlayerOptionEmpty(GameUtilities.PlayerColor.BLACK_PLAYER) && isPlayerOptionEmpty(GameUtilities.PlayerColor.WHITE_PLAYER);
 
             return doesBothPlayersHasNoOptions;
         }
@@ -138,6 +167,11 @@ namespace Ex02_Othelo
             UI.DeclareWinner(whitePlayerScore, blackPlayerScore, winner);
         }
 
+        private void initializePlayersOptions()
+        {
+
+        }
+
         private void restartGame()
         {
             //this method restarts a game.
@@ -146,6 +180,7 @@ namespace Ex02_Othelo
         private void exitGame()
         {
             //this method exiting the game and calls the ui to show the exit message.
+            UI.ShowExitMessage();
         }
     }
 }

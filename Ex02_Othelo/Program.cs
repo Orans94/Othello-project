@@ -14,7 +14,8 @@ namespace Ex02_Othelo
     {
         public static void Main(string[] args)
         {
-            GameManager.Run();
+            GameManager othelo = new GameManager();
+            othelo.Run();
         }
     }
 }

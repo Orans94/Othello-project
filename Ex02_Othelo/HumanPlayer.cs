@@ -14,13 +14,20 @@ namespace Ex02_Othelo
             string playerMove;
 
             playerMove = UI.RequestPlayerToPlay(m_PlayerColor);
+            return null;
         }
 
         public string Name
         {
             //a propertie for m_PlayerName.
-            get { return m_PlayerName; }
-            set { m_PlayerName = value; }
+            get
+            {
+                return m_PlayerName;
+            }
+            set
+            {
+                 m_PlayerName = value;
+            }
         }
     }
 }

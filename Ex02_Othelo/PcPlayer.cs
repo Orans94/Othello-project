@@ -12,12 +12,13 @@ namespace Ex02_Othelo
 
         public string Play(List<Cell> i_PcPlayerOptions)
         {
-
+            return null;
         }
 
         private string randomCell(List<Cell> i_PcPlayerOptions)
         {
             //this method is choosing a random cell from the PcPlayerOptions
+            return null;
         }
     }
 }
