@@ -21,6 +21,8 @@ namespace Ex02_Othelo
                 for (int colIndex = 0; colIndex < (int)i_BoardSize; colIndex++)
                 {
                     m_Board[rowIndex, colIndex] = new Cell();
+                    m_Board[rowIndex, colIndex].Row = rowIndex;
+                    m_Board[rowIndex, colIndex].Column = colIndex;
                 }
             }
         }
@@ -86,15 +88,15 @@ namespace Ex02_Othelo
             return isCellEmpty;
         }
 
-        //public bool IsCellInBoard(int i_RowIndex,int i_ColumnIndex)
-        //{
-        //    //checking if the cell given is in board limits.
-        //    bool isCellInBoard;
+        public bool IsCellInBoard(Cell i_CellIterator)
+        {
+            //checking if the cell given is in board limits.
+            bool isCellInBoard;
 
-        //    isCellInBoard = (i_RowIndex <= (int)m_BoardSize) && (i_RowIndex >= 0) && (i_ColumnIndex <= (int)m_BoardSize) && (i_ColumnIndex >= 0);
+            isCellInBoard = (i_CellIterator.Row <= (int)m_BoardSize) && (i_CellIterator.Row >= 0) && (i_CellIterator.Column <= (int)m_BoardSize) && (i_CellIterator.Column >= 0);
 
-        //    return isCellInBoard;
-        //}
+            return isCellInBoard;
+        }
 
         public int CountSignAppearances(char i_Sign)
         {

@@ -164,8 +164,73 @@ namespace Ex02_Othelo
         private bool isPlayerMoveBlockingEnemy(int i_PlayerMoveRowIndex, int i_PlayerMoveColumnIndex, ref LinkedList<Cell> io_CellsToUpdate)
         {
             //this method recieves a player move and return true if the move is blocking the enemy.
-            
+            bool isVerticalBlocking, isHorizontalBlocking, isDiagonalOneBlocking, isDiagonalTwoBlocking, isMoveBlockingEnemy;
 
+            isVerticalBlocking = isVerticallyBlocking(i_PlayerMoveRowIndex, i_PlayerMoveColumnIndex, ref io_CellsToUpdate);
+            isHorizontalBlocking = isHorizontallyBlocking(i_PlayerMoveRowIndex, i_PlayerMoveColumnIndex, ref io_CellsToUpdate);
+            isDiagonalOneBlocking = isDiagonallyOneBlocking(i_PlayerMoveRowIndex, i_PlayerMoveColumnIndex, ref io_CellsToUpdate);
+            isDiagonalTwoBlocking = isDiagonallyTwoBlocking(i_PlayerMoveRowIndex, i_PlayerMoveColumnIndex, ref io_CellsToUpdate);
+
+            isMoveBlockingEnemy = isVerticalBlocking || isHorizontalBlocking || isDiagonalOneBlocking || isDiagonalTwoBlocking;
+
+            return isMoveBlockingEnemy;
+
+        }
+
+        private bool isDiagonallyTwoBlocking(int i_PlayerMoveRowIndex, int i_PlayerMoveColumnIndex, ref LinkedList<Cell> io_CellsToUpdate)
+        {
+            throw new NotImplementedException();
+        }
+
+        private bool isDiagonallyOneBlocking(int i_PlayerMoveRowIndex, int i_PlayerMoveColumnIndex, ref LinkedList<Cell> io_CellsToUpdate)
+        {
+            throw new NotImplementedException();
+        }
+
+        private bool isHorizontallyBlocking(int i_PlayerMoveRowIndex, int i_PlayerMoveColumnIndex, ref LinkedList<Cell> io_CellsToUpdate)
+        {
+            throw new NotImplementedException();
+        }
+
+        private bool isVerticallyBlocking(int i_PlayerMoveRowIndex, int i_PlayerMoveColumnIndex, ref LinkedList<Cell> io_CellsToUpdate)
+        {
+            int rowEndOfBlock, colEndOfBlock;
+            Cell cellIterator = new Cell();
+            bool isCellEnemy, isInBoardLimits;
+
+            //initializing cellIterator to the cell we want to check
+            cellIterator.Row = i_PlayerMoveRowIndex + 1;
+            cellIterator.Column = i_PlayerMoveColumnIndex;
+            isCellEnemy = false;
+            //in limits, different from my sign, 
+            if (GameBoard.IsCellInBoard(cellIterator))
+            {
+                isCellEnemy = isCellAnEnemy(cellIterator, Turn);
+            }
+            // 1. Move up while there is a sign of the other player and CHECK BOARD LIMITS
+
+
+            while (isCellEnemy) //
+            {   
+
+            }
+
+            //      1.1 Save the indices of the sign of yours
+
+            // 2. if there is a block, then add all cell in loop to list
+
+            // 3. SAME JUST DOWN :)
+
+
+        }
+
+        private bool isCellAnEnemy(Cell i_CellIterator, GameUtilities.PlayerColor i_CurrentPlayerTurn)
+        {
+            bool isCellEnemy;
+
+            isCellEnemy = i_CellIterator.Sign != (char)i_CurrentPlayerTurn;
+
+            return isCellEnemy;
         }
 
         private bool isPlayerOptionEmpty(GameUtilities.PlayerColor i_PlayerColor)
