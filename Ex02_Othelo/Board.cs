@@ -20,9 +20,7 @@ namespace Ex02_Othelo
             {
                 for (int colIndex = 0; colIndex < (int)i_BoardSize; colIndex++)
                 {
-                    m_Board[rowIndex, colIndex] = new Cell();
-                    m_Board[rowIndex, colIndex].Row = rowIndex;
-                    m_Board[rowIndex, colIndex].Column = colIndex;
+                    m_Board[rowIndex, colIndex] = new Cell(rowIndex, colIndex);
                 }
             }
         }
@@ -76,6 +74,14 @@ namespace Ex02_Othelo
             }
         }
 
+        public void UpdateBoard(LinkedList<Cell> i_CellsToUpdate, GameUtilities.PlayerColor i_PlayingPlayer)
+        {
+            //this method recieves a list of cells and a player color and put the correct sign in those cells.
+            foreach (Cell currentCell in i_CellsToUpdate)
+            {
+                m_Board[currentCell.Row, currentCell.Column].Sign = (char)i_PlayingPlayer;
+            }
+        }
 
         public bool IsCellEmpty(int i_RowIndex, int i_ColumnIndex)
         {

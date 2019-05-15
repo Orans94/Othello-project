@@ -11,6 +11,16 @@ namespace Ex02_Othelo
         private int m_Row;
         private int m_Column;
 
+        public Cell(int i_Row, int i_Column)
+        {
+            Row = i_Row;
+            Column = i_Column;
+        }
+        public Cell()
+        {
+            
+        }
+        
         public int Row
         {
             get
