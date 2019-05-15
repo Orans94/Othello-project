@@ -99,10 +99,21 @@ namespace Ex02_Othelo
             //checking if the cell given is in board limits.
             bool isCellInBoard;
 
-            isCellInBoard = (i_CellIterator.Row <= (int)m_BoardSize) && (i_CellIterator.Row >= 0) && (i_CellIterator.Column <= (int)m_BoardSize) && (i_CellIterator.Column >= 0);
+            isCellInBoard = (i_CellIterator.Row <= (int)Size) && (i_CellIterator.Row >= 0) && (i_CellIterator.Column <= (int)Size) && (i_CellIterator.Column >= 0);
 
             return isCellInBoard;
         }
+        public bool IsCellInBoard(int i_CellRowIndex, int i_CellColumnIndex)
+        {
+            //checking if the indices given is in board limits.
+            bool isCellInBoard;
+
+            isCellInBoard = (i_CellRowIndex < (int)Size) && (i_CellRowIndex >= 0) && (i_CellColumnIndex < (int)Size) && (i_CellColumnIndex >= 0);
+
+            return isCellInBoard;
+        }
+
+
 
         public int CountSignAppearances(char i_Sign)
         {

@@ -11,10 +11,11 @@ namespace Ex02_Othelo
         private int m_Row;
         private int m_Column;
 
-        public Cell(int i_Row, int i_Column)
+        public Cell(int i_Row, int i_Column, char i_Sign = ' ')
         {
             Row = i_Row;
             Column = i_Column;
+            Sign = i_Sign;
         }
         public Cell()
         {

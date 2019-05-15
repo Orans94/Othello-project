@@ -197,10 +197,19 @@ namespace Ex02_Othelo
             }
             else
             {
-                    isValidLength = i_PlayerMoveInput.Length == 2;
+                isValidLength = i_PlayerMoveInput.Length == 2;
+                if (isValidLength)
+                {
                     isFirstCharValid = isFirstCharIsAValidLetter(i_PlayerMoveInput[0], i_CurrentBoardSize); // first char need to be letter and in board range
                     isSecondCharValid = isSecondCharIsAValidNumber(i_PlayerMoveInput[1], i_CurrentBoardSize); // second char need to be number and in board range
-                    result = isValidLength && isFirstCharValid && isSecondCharValid;
+                    result = isFirstCharValid && isSecondCharValid;
+                }
+                else
+                {
+                    result = false;
+
+                }
+
             }
             return result;
         }
