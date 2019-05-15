@@ -9,12 +9,15 @@ namespace Ex02_Othelo
         private string m_PlayerName;
         GameUtilities.PlayerColor m_PlayerColor;
 
-        public string Play()
+        // This method ask from the player to play till his input is valid, then it return his move by ref
+        // Example for valid move - "E3", then io_CurrentPlayerColumnMove will hold 4 and io_CurrentPlayerRowMove will hold 2
+        public void Play(Board.eBoardSize i_BoardSize, out int io_CurrentPlayerRowMove, out int io_CurrentPlayerColumnMove)
         {
-            string playerMove;
+            string playerMoveString;
 
-            playerMove = UI.RequestPlayerToPlay(m_PlayerColor);
-            return null;
+            playerMoveString = UI.RequestPlayerToPlay(m_PlayerColor, i_BoardSize);
+            io_CurrentPlayerColumnMove = playerMoveString[0] - 'A';
+            io_CurrentPlayerRowMove = playerMoveString[1] - '1';
         }
 
         public string Name

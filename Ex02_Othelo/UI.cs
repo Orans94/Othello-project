@@ -142,7 +142,17 @@ namespace Ex02_Othelo
             }
 
             userBoardSizeChoiceInt = userBoardSizeChoiceString[0] - '0';
-            boardSize = (Board.eBoardSize)userBoardSizeChoiceInt;
+            if (userBoardSizeChoiceInt == 2)
+            {
+                boardSize = Board.eBoardSize.bigBoard;
+            }
+            else
+            {
+                boardSize = Board.eBoardSize.smallBoard;
+            }
+
+            
+            
             return boardSize;
         }
 
@@ -214,14 +224,17 @@ namespace Ex02_Othelo
         private static bool isFirstCharIsAValidLetter(char i_CharToValidate, Board.eBoardSize i_CurrentBoardSize)
         {
             bool result;
+            char upperCharToValidate;
+
+            upperCharToValidate = char.ToUpper(i_CharToValidate);
 
             if (i_CurrentBoardSize == Board.eBoardSize.bigBoard)
             {
-                result = i_CharToValidate >= 'A' && i_CharToValidate <= 'H';
+                result = upperCharToValidate >= 'A' && upperCharToValidate <= 'H';
             }
             else
             {
-                result = i_CharToValidate >= 'A' && i_CharToValidate <= 'F';
+                result = upperCharToValidate >= 'A' && upperCharToValidate <= 'F';
             }
 
             return result;

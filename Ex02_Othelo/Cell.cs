@@ -6,7 +6,8 @@ namespace Ex02_Othelo
 {
     class Cell
     {
-        private char m_Sign = ' ';
+        public const char EMPTY = ' ';
+        private char m_Sign = EMPTY;
 
         public char Sign
         {
@@ -18,6 +19,20 @@ namespace Ex02_Othelo
             {
                 m_Sign = value;
             }
+        }
+        public bool IsEmpty()
+        {
+            bool isCellEmpty;
+            if(Sign == EMPTY)
+            {
+                isCellEmpty = true;
+            }
+            else
+            {
+                isCellEmpty = false;
+            }
+
+            return isCellEmpty;
         }
     }
 }
