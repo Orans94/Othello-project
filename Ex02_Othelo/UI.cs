@@ -81,31 +81,34 @@ namespace Ex02_Othelo
 
             Console.WriteLine("Please enter user name");
             userName = Console.ReadLine();
+            Ex02.ConsoleUtils.Screen.Clear();
 
             return userName;
         }
 
-        public static GameManager.GameMode AskUserForGameMode()
+        public static GameManager.eGameMode AskUserForGameMode()
         {
             //TODO: convert string to GameMode check input and demand legal input.
             //this method is printing a menu for the user to choose the game mode and return the answer as a string.
             string userGameModeChoiceString;
-            GameManager.GameMode gameMode;
+            GameManager.eGameMode gameMode;
             bool isChoiceValid;
             int userGameModeChoiceInt;
 
             Console.WriteLine("Please choose game mode:{0}1.Human VS Human{0}2.Human VS PC", Environment.NewLine);
             userGameModeChoiceString = Console.ReadLine();
+            Ex02.ConsoleUtils.Screen.Clear();
             isChoiceValid = isUserChoiceValid(userGameModeChoiceString);
             while (!isChoiceValid)
             {
                 Console.WriteLine("Invalid input, Please choose game mode:{0}1.Human VS Human{0}2.Human VS PC", Environment.NewLine);
                 userGameModeChoiceString = Console.ReadLine();
                 isChoiceValid = isUserChoiceValid(userGameModeChoiceString);
+                Ex02.ConsoleUtils.Screen.Clear();
             }
 
             userGameModeChoiceInt = userGameModeChoiceString[0] - '0';
-            gameMode = (GameManager.GameMode)userGameModeChoiceInt;
+            gameMode = (GameManager.eGameMode)userGameModeChoiceInt;
 
             return gameMode;
         }
@@ -132,6 +135,7 @@ namespace Ex02_Othelo
 
             Console.WriteLine("Please choose board size:{0}1.6x6{0}2.8x8", Environment.NewLine);
             userBoardSizeChoiceString = Console.ReadLine();
+            Ex02.ConsoleUtils.Screen.Clear();
 
             isChoiceValid = isUserChoiceValid(userBoardSizeChoiceString);
             while (!isChoiceValid)
@@ -139,6 +143,7 @@ namespace Ex02_Othelo
                 Console.WriteLine("Invalid input, Please choose board size:{0}1.6x6{0}2.8x8", Environment.NewLine);
                 userBoardSizeChoiceString = Console.ReadLine();
                 isChoiceValid = isUserChoiceValid(userBoardSizeChoiceString);
+                Ex02.ConsoleUtils.Screen.Clear();
             }
 
             userBoardSizeChoiceInt = userBoardSizeChoiceString[0] - '0';
@@ -156,14 +161,14 @@ namespace Ex02_Othelo
             return boardSize;
         }
 
-        public static string RequestPlayerToPlay(GameUtilities.PlayerColor i_PlayerTurn, Board.eBoardSize i_CurrentBoardSize)
+        public static string RequestPlayerToPlay(GameUtilities.ePlayerColor i_PlayerTurn, Board.eBoardSize i_CurrentBoardSize)
         {
             //this method is recieving the player that should play now and asking the player to play
             bool isMoveValidate;
             string playerMoveInput, currentPlayer;
             
 
-            if (i_PlayerTurn == GameUtilities.PlayerColor.BLACK_PLAYER)
+            if (i_PlayerTurn == GameUtilities.ePlayerColor.BLACK_PLAYER)
             {
                 currentPlayer = "Black player";
             }
@@ -235,8 +240,6 @@ namespace Ex02_Othelo
         private static bool isFirstCharIsAValidLetter(char i_CharToValidate, Board.eBoardSize i_CurrentBoardSize)
         {
             bool result;
-            char upperCharToValidate;
-
 
             if (i_CurrentBoardSize == Board.eBoardSize.bigBoard)
             {
@@ -256,18 +259,18 @@ namespace Ex02_Othelo
             Console.WriteLine("The move is not syntax valid, please enter a valid move");
         }
 
-        public static void InformTurnHasBeenChanged(GameUtilities.PlayerColor i_PlayerTurn)
+        public static void InformTurnHasBeenChanged(GameUtilities.ePlayerColor i_PlayerTurn)
         {
             //this method is informing the players that the turn has been changed.
         }
 
-        public static void DeclareWinner(int i_WhitePlayerScore, int i_BlackPlayerScore, GameUtilities.PlayerColor i_WinnerColor)
+        public static void DeclareWinner(int i_WhitePlayerScore, int i_BlackPlayerScore, GameUtilities.ePlayerColor i_WinnerColor)
         {
             //this method is printing a game over message, which contains the scores of both of the players and the winner name and color.
             StringBuilder winnerDeclerationMessage = new StringBuilder("", 60);
             string winnerColor;
 
-            if(i_WinnerColor == GameUtilities.PlayerColor.BLACK_PLAYER)
+            if(i_WinnerColor == GameUtilities.ePlayerColor.BLACK_PLAYER)
             {
                 winnerColor = "Black player";
             }
@@ -281,16 +284,17 @@ namespace Ex02_Othelo
             Console.WriteLine(winnerDeclerationMessage);
         }
 
-        public static GameManager.GameDecision AskUserForRematchOrExit()
+        public static GameManager.eGameDecision AskUserForRematchOrExit()
         {
             //this method is asking user whether he wants a rematch or to exit and return the answer as a string.
             string userRematchOrExitChoiceString;
-            GameManager.GameDecision rematchOrExit;
+            GameManager.eGameDecision rematchOrExit;
             bool isChoiceValid;
             int userRematchOrExitChoiceInt;
 
             Console.WriteLine("Would you like to play another game or to exit?{0}1.Rematch{0}2.Exit{0}", Environment.NewLine);
             userRematchOrExitChoiceString = Console.ReadLine();
+            Ex02.ConsoleUtils.Screen.Clear();
             isChoiceValid = isUserChoiceValid(userRematchOrExitChoiceString);
             while (!isChoiceValid)
             {
@@ -300,7 +304,7 @@ namespace Ex02_Othelo
             }
 
             userRematchOrExitChoiceInt = userRematchOrExitChoiceString[0] - '0';
-            rematchOrExit = (GameManager.GameDecision)userRematchOrExitChoiceInt;
+            rematchOrExit = (GameManager.eGameDecision)userRematchOrExitChoiceInt;
 
             return rematchOrExit;
         }

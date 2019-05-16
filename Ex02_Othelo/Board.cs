@@ -13,14 +13,14 @@ namespace Ex02_Othelo
         public Board(eBoardSize i_BoardSize)
         {
             //create board according to the size that the user chose.
-            Size = i_BoardSize;
+            m_BoardSize = i_BoardSize;
 
             m_Board = new Cell[(int)i_BoardSize, (int)i_BoardSize];
             for (int rowIndex = 0; rowIndex < (int)i_BoardSize; rowIndex++)
             {
                 for (int colIndex = 0; colIndex < (int)i_BoardSize; colIndex++)
                 {
-                    Matrix[rowIndex, colIndex] = new Cell(rowIndex, colIndex);
+                    m_Board[rowIndex, colIndex] = new Cell(rowIndex, colIndex);
                 }
             }
         }
@@ -47,7 +47,7 @@ namespace Ex02_Othelo
         public void UpdateCell(int i_RowIndex, int i_ColumnIndex, char i_Sign)
         {
             //updating the board after the player move
-            Matrix[i_RowIndex, i_ColumnIndex].Sign = i_Sign;
+            m_Board[i_RowIndex, i_ColumnIndex].Sign = i_Sign;
         }
 
         public void Initialize()
@@ -56,17 +56,17 @@ namespace Ex02_Othelo
             // TODO: Add consts
             if (Size == eBoardSize.bigBoard)
             {
-                Matrix[3, 3].Sign = 'O';
-                Matrix[4, 3].Sign = 'X';
-                Matrix[4, 4].Sign = 'O';
-                Matrix[3, 4].Sign = 'X';
+                m_Board[3, 3].Sign = 'O';
+                m_Board[4, 3].Sign = 'X';
+                m_Board[4, 4].Sign = 'O';
+                m_Board[3, 4].Sign = 'X';
             }
             else if (Size == eBoardSize.smallBoard)
             {
-                Matrix[2, 2].Sign = 'O';
-                Matrix[3, 2].Sign = 'X';
-                Matrix[3, 3].Sign = 'O';
-                Matrix[2, 3].Sign = 'X';
+                m_Board[2, 2].Sign = 'O';
+                m_Board[3, 2].Sign = 'X';
+                m_Board[3, 3].Sign = 'O';
+                m_Board[2, 3].Sign = 'X';
             }
         }
 
@@ -79,13 +79,14 @@ namespace Ex02_Othelo
             }
         }
 
-        public void UpdateBoard(LinkedList<Cell> i_CellsToUpdate, GameUtilities.PlayerColor i_PlayingPlayer)
+        public void UpdateBoard(LinkedList<Cell> i_CellsToUpdate, GameUtilities.ePlayerColor i_PlayingPlayer)
         {
             //this method recieves a list of cells and a player color and put the correct sign in those cells.
             foreach (Cell currentCell in i_CellsToUpdate)
             {
-                Matrix[currentCell.Row, currentCell.Column].Sign = (char)i_PlayingPlayer;
+                m_Board[currentCell.Row, currentCell.Column].Sign = (char)i_PlayingPlayer;
             }
+            i_CellsToUpdate.Clear();
         }
 
         public bool IsCellEmpty(int i_RowIndex, int i_ColumnIndex)
@@ -94,7 +95,7 @@ namespace Ex02_Othelo
             //TODO:MAKE A CONST FOR ' ' (EMPTY).
             bool isCellEmpty;
 
-            isCellEmpty = Matrix[i_RowIndex, i_ColumnIndex].IsEmpty();
+            isCellEmpty = m_Board[i_RowIndex, i_ColumnIndex].IsEmpty();
 
             return isCellEmpty;
         }
@@ -104,7 +105,7 @@ namespace Ex02_Othelo
             //checking if the cell given is in board limits.
             bool isCellInBoard;
 
-            isCellInBoard = (i_CellIterator.Row < (int)Size) && (i_CellIterator.Row >= 0) && (i_CellIterator.Column < (int)Size) && (i_CellIterator.Column >= 0);
+            isCellInBoard = (i_CellIterator.Row < (int)m_BoardSize) && (i_CellIterator.Row >= 0) && (i_CellIterator.Column < (int)m_BoardSize) && (i_CellIterator.Column >= 0);
 
             return isCellInBoard;
         }
@@ -113,7 +114,7 @@ namespace Ex02_Othelo
             //checking if the indices given is in board limits.
             bool isCellInBoard;
 
-            isCellInBoard = (i_CellRowIndex < (int)Size) && (i_CellRowIndex >= 0) && (i_CellColumnIndex < (int)Size) && (i_CellColumnIndex >= 0);
+            isCellInBoard = (i_CellRowIndex < (int)m_BoardSize) && (i_CellRowIndex >= 0) && (i_CellColumnIndex < (int)m_BoardSize) && (i_CellColumnIndex >= 0);
 
             return isCellInBoard;
         }

@@ -13,9 +13,9 @@ namespace Ex02_Othelo
 
         public Cell(int i_Row, int i_Column, char i_Sign = ' ')
         {
-            Row = i_Row;
-            Column = i_Column;
-            Sign = i_Sign;
+            m_Row = i_Row;
+            m_Column = i_Column;
+            m_Sign = i_Sign;
         }
         public Cell()
         {
@@ -59,7 +59,7 @@ namespace Ex02_Othelo
         public bool IsEmpty()
         {
             bool isCellEmpty;
-            if(Sign == EMPTY)
+            if(m_Sign == EMPTY)
             {
                 isCellEmpty = true;
             }

@@ -6,9 +6,9 @@ namespace Ex02_Othelo
 {
     class HumanPlayer
     {
-        public enum UserRequest { EXIT = -1 };
+        public enum eUserRequest { EXIT = -1 };
         private string m_PlayerName;
-        GameUtilities.PlayerColor m_PlayerColor;
+        GameUtilities.ePlayerColor m_PlayerColor;
 
         // This method ask from the player to play till his input is valid, then it return his move by ref
         // Example for valid move - "E3", then io_CurrentPlayerColumnMove will hold 4 and io_CurrentPlayerRowMove will hold 2
@@ -21,8 +21,8 @@ namespace Ex02_Othelo
             isUserRequsetToExit = playerMoveString.Length == 1;
             if (isUserRequsetToExit)
             {
-                io_CurrentPlayerColumnMove = (int)UserRequest.EXIT;
-                io_CurrentPlayerRowMove = (int)UserRequest.EXIT;
+                io_CurrentPlayerColumnMove = (int)eUserRequest.EXIT;
+                io_CurrentPlayerRowMove = (int)eUserRequest.EXIT;
             }
             else
             {
@@ -32,9 +32,9 @@ namespace Ex02_Othelo
 
         }
 
-        public HumanPlayer(GameUtilities.PlayerColor i_PlayerColor)
+        public HumanPlayer(GameUtilities.ePlayerColor i_PlayerColor)
         {
-            Color = i_PlayerColor;
+            m_PlayerColor = i_PlayerColor;
         }
         public string Name
         {
@@ -48,7 +48,7 @@ namespace Ex02_Othelo
                  m_PlayerName = value;
             }
         }
-        public GameUtilities.PlayerColor Color
+        public GameUtilities.ePlayerColor Color
         {
             //a propertie for m_PlayerName.
             get

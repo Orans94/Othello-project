@@ -7,27 +7,20 @@ namespace Ex02_Othelo
     class PcPlayer
     {
         private string m_PlayerName = "PC";
-        GameUtilities.PlayerColor m_PlayerColor = GameUtilities.PlayerColor.BLACK_PLAYER;
+        GameUtilities.ePlayerColor m_PlayerColor = GameUtilities.ePlayerColor.BLACK_PLAYER;
 
 
-        public string Play(LinkedList<Cell> i_PcPlayerOptions, out int io_CurrentMoveRowIndex, out int io_CurrentMoveColumnIndex)
+        public void Play(LinkedList<Cell> i_PcPlayerOptions, GameManager.eGameMode gameMode, out int io_CurrentMoveRowIndex, out int io_CurrentMoveColumnIndex)
         {
+            Random randomMove = new Random();
+            int randomNum;
+            Cell randomedCell = new Cell();
 
-            // =======================
-            io_CurrentMoveRowIndex = 0;
-            io_CurrentMoveColumnIndex = 0;
-            return null;
-            // =======================
-        }
-
-        private string randomCell(LinkedList<Cell> i_PcPlayerOptions, out int io_CurrentMoveRowIndex, out int io_CurrentMoveColumnIndex)
-        {
-            //this method is choosing a random cell from the PcPlayerOptions
-            // =======================
-            io_CurrentMoveRowIndex = 0;
-            io_CurrentMoveColumnIndex = 0;
-            return null;
-            // =======================
+            randomNum = randomMove.Next(i_PcPlayerOptions.Count);
+            //randomedCell = i_PcPlayerOptions.ElemantAt(randomNum);
+            
+            io_CurrentMoveColumnIndex = randomedCell.Column;
+            io_CurrentMoveRowIndex = randomedCell.Row;
         }
     }
 }
