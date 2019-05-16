@@ -258,13 +258,64 @@ namespace Ex02_Othelo
         private bool isLegalMove(int i_PlayerMoveRowIndex, int i_PlayerMoveColumnIndex, ref LinkedList<Cell> io_CellsToUpdate)
         {
             //this method recieves a player move and return true if the move is legal, false otherwise.
-            bool isPlayerMoveLegal, isCellEmpty, isMoveBlockingEnemy;
+            bool isPlayerMoveLegal, isCellEmpty, isMoveBlockingEnemy, isPlayerMoveAnOption;
 
-            isCellEmpty = GameBoard.IsCellEmpty(i_PlayerMoveRowIndex, i_PlayerMoveColumnIndex);
-            isMoveBlockingEnemy = isPlayerMoveBlockingEnemy(i_PlayerMoveRowIndex, i_PlayerMoveColumnIndex, ref io_CellsToUpdate);
-            isPlayerMoveLegal = isCellEmpty && isMoveBlockingEnemy;
+            isPlayerMoveAnOption = isMoveInOptionsList(GameBoard.Matrix[i_PlayerMoveRowIndex,i_PlayerMoveColumnIndex]);
 
+            if (isPlayerMoveAnOption)
+            {
+                isCellEmpty = GameBoard.IsCellEmpty(i_PlayerMoveRowIndex, i_PlayerMoveColumnIndex);
+                isMoveBlockingEnemy = isPlayerMoveBlockingEnemy(i_PlayerMoveRowIndex, i_PlayerMoveColumnIndex, ref io_CellsToUpdate);
+                isPlayerMoveLegal = isCellEmpty && isMoveBlockingEnemy;
+            }
+            else
+            {
+                isPlayerMoveLegal = false;
+            }
             return isPlayerMoveLegal;
+        }
+
+        private bool isMoveInOptionsList(Cell cellToSearchForInOptionsList)
+        {
+            bool isCellFoundInOptionsList, areCellsEqual;
+
+
+            isCellFoundInOptionsList = false;
+            if (Turn == GameUtilities.PlayerColor.BLACK_PLAYER)
+            {
+                foreach (Cell cellIteator in BlackPlayerOptions)
+                {
+                    areCellsEqual = areTwoCellsEquals(cellIteator, cellToSearchForInOptionsList);
+                    if (areCellsEqual)
+                    {
+                        isCellFoundInOptionsList = true;
+                        break;
+                    }
+                }
+            }
+            else
+            {
+                foreach (Cell cellIteator in WhitePlayerOptions)
+                {
+                    areCellsEqual = areTwoCellsEquals(cellIteator, cellToSearchForInOptionsList);
+                    if (areCellsEqual)
+                    {
+                        isCellFoundInOptionsList = true;
+                        break;
+                    }
+                }
+            }
+
+            return isCellFoundInOptionsList;
+        }
+
+        private bool areTwoCellsEquals(Cell i_FirstCell, Cell i_SecondCell)
+        {
+            bool areCellsEqual;
+
+            areCellsEqual = i_FirstCell.Row == i_SecondCell.Row && i_FirstCell.Column == i_SecondCell.Column;
+
+            return areCellsEqual;
         }
 
         private bool isPlayerMoveBlockingEnemy(int i_PlayerMoveRowIndex, int i_PlayerMoveColumnIndex, ref LinkedList<Cell> io_CellsToUpdate, bool i_AddCellsToList = true)
