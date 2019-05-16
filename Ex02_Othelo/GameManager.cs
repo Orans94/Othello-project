@@ -10,8 +10,8 @@ namespace Ex02_Othelo
         public enum eDirection { UP = -1, DOWN = 1, LEFT = -1, RIGHT = 1, NO_DIRECTION = 0};
 
         private Board m_GameBoard;
-        private LinkedList<Cell> m_BlackPlayerOptions;
-        private LinkedList<Cell> m_WhitePlayerOptions;
+        private List<Cell> m_BlackPlayerOptions;
+        private List<Cell> m_WhitePlayerOptions;
         private GameUtilities.ePlayerColor m_PlayerTurn;
         private eGameMode m_GameMode;
 
@@ -23,9 +23,9 @@ namespace Ex02_Othelo
             PcPlayer blackPCPlayer = new PcPlayer();
             int currentPlayerMoveRowIndex, currentPlayerMoveColumnIndex;
             bool isPlayerMoveLegal, isGameEnd = false;
-            LinkedList<Cell> cellsToUpdate = new LinkedList<Cell>();
-            m_BlackPlayerOptions = new LinkedList<Cell>();
-            m_WhitePlayerOptions = new LinkedList<Cell>();
+            List<Cell> cellsToUpdate = new List<Cell>();
+            m_BlackPlayerOptions = new List<Cell>();
+            m_WhitePlayerOptions = new List<Cell>();
             eGameDecision rematchOrExit;
 
             configureGameSettings(whiteHumanPlayer, blackHumanPlayer);
@@ -117,7 +117,7 @@ namespace Ex02_Othelo
             }
         }
 
-        private void tellCurrentPlayerToPlay(HumanPlayer i_BlackHumanPlayer, HumanPlayer i_WhiteHumanPlayer, PcPlayer i_BlackPcPlayer, LinkedList<Cell> i_BlackPcPlayerOptions,
+        private void tellCurrentPlayerToPlay(HumanPlayer i_BlackHumanPlayer, HumanPlayer i_WhiteHumanPlayer, PcPlayer i_BlackPcPlayer, List<Cell> i_BlackPcPlayerOptions,
             out int io_CurrentMoveRowIndex, out int io_CurrentMoveColumnIndex)
         {
             //this method recieves the players, and the pcplayer options, checks who should play now and tell them to play.
@@ -162,7 +162,7 @@ namespace Ex02_Othelo
             //}
         }
 
-        public LinkedList<Cell> BlackPlayerOptions
+        public List<Cell> BlackPlayerOptions
         {
             get
             {
@@ -170,7 +170,7 @@ namespace Ex02_Othelo
             }
         }
 
-        public LinkedList<Cell> WhitePlayerOptions
+        public List<Cell> WhitePlayerOptions
         {
             get
             {
@@ -190,7 +190,7 @@ namespace Ex02_Othelo
 
             //this method is updating the players options.
             bool isCellAnOption;
-            LinkedList<Cell> cellList = new LinkedList<Cell>();
+            List<Cell> cellList = new List<Cell>();
 
             foreach (Cell cellIteator in m_GameBoard.Matrix)
             {
@@ -200,7 +200,7 @@ namespace Ex02_Othelo
                     isCellAnOption = isPlayerMoveBlockingEnemy(cellIteator.Row, cellIteator.Column, ref cellList, false);
                     if (isCellAnOption)
                     {
-                        m_WhitePlayerOptions.AddLast(cellIteator);
+                        m_WhitePlayerOptions.Add(cellIteator);
                     }
                     else
                     {
@@ -208,7 +208,7 @@ namespace Ex02_Othelo
                         isCellAnOption = isPlayerMoveBlockingEnemy(cellIteator.Row, cellIteator.Column, ref cellList, false);
                         if (isCellAnOption)
                         {
-                            m_BlackPlayerOptions.AddLast(cellIteator);
+                            m_BlackPlayerOptions.Add(cellIteator);
                         }
                     }
                 }
@@ -231,7 +231,7 @@ namespace Ex02_Othelo
             }
         }
 
-        private bool isLegalMove(int i_PlayerMoveRowIndex, int i_PlayerMoveColumnIndex, ref LinkedList<Cell> io_CellsToUpdate)
+        private bool isLegalMove(int i_PlayerMoveRowIndex, int i_PlayerMoveColumnIndex, ref List<Cell> io_CellsToUpdate)
         {
             //this method recieves a player move and return true if the move is legal, false otherwise.
             bool isPlayerMoveLegal, isCellEmpty, isMoveBlockingEnemy, isPlayerMoveAnOption;
@@ -293,7 +293,7 @@ namespace Ex02_Othelo
             return areCellsEqual;
         }
 
-        private bool isPlayerMoveBlockingEnemy(int i_PlayerMoveRowIndex, int i_PlayerMoveColumnIndex, ref LinkedList<Cell> io_CellsToUpdate, bool i_AddCellsToList = true)
+        private bool isPlayerMoveBlockingEnemy(int i_PlayerMoveRowIndex, int i_PlayerMoveColumnIndex, ref List<Cell> io_CellsToUpdate, bool i_AddCellsToList = true)
         {
             //this method recieves a player move and return true if the move is blocking the enemy.
             //its also updates the list of cells to update.
@@ -317,7 +317,7 @@ namespace Ex02_Othelo
 
         }
 
-        private bool isDiagonallyTwoBlocking(int i_PlayerMoveRowIndex, int i_PlayerMoveColumnIndex, ref LinkedList<Cell> io_CellsToUpdate, int i_VerticalDirection, int i_HorizontalDirection, bool i_AddCellsToList)
+        private bool isDiagonallyTwoBlocking(int i_PlayerMoveRowIndex, int i_PlayerMoveColumnIndex, ref List<Cell> io_CellsToUpdate, int i_VerticalDirection, int i_HorizontalDirection, bool i_AddCellsToList)
         {
             int currentRow, currentColumn, j;
             Cell cellIterator = null;
@@ -341,7 +341,7 @@ namespace Ex02_Othelo
                     j = i_PlayerMoveRowIndex;
                     for (int i = i_PlayerMoveColumnIndex; i > cellIterator.Column; i--)
                     {
-                        io_CellsToUpdate.AddLast(m_GameBoard.Matrix[j, i]);
+                        io_CellsToUpdate.Add(m_GameBoard.Matrix[j, i]);
                         j += (int)eDirection.UP;
                     }
                 }
@@ -350,7 +350,7 @@ namespace Ex02_Othelo
                     j = i_PlayerMoveRowIndex;
                     for (int i = i_PlayerMoveColumnIndex; i < cellIterator.Column; i++)
                     {
-                        io_CellsToUpdate.AddLast(m_GameBoard.Matrix[j, i]);
+                        io_CellsToUpdate.Add(m_GameBoard.Matrix[j, i]);
                         j += (int)eDirection.DOWN;
                     }
                 }
@@ -358,7 +358,7 @@ namespace Ex02_Othelo
             return isBlockingLine;
         }
 
-        private bool isDiagonallyOneBlocking(int i_PlayerMoveRowIndex, int i_PlayerMoveColumnIndex, ref LinkedList<Cell> io_CellsToUpdate, int i_VerticalDirection, int i_HorizontalDirection, bool i_AddCellsToList)
+        private bool isDiagonallyOneBlocking(int i_PlayerMoveRowIndex, int i_PlayerMoveColumnIndex, ref List<Cell> io_CellsToUpdate, int i_VerticalDirection, int i_HorizontalDirection, bool i_AddCellsToList)
         {
             int currentRow, currentColumn, j;
             Cell cellIterator = null;
@@ -384,7 +384,7 @@ namespace Ex02_Othelo
                     j = i_PlayerMoveRowIndex;
                     for (int i = i_PlayerMoveColumnIndex; i > cellIterator.Column; i--)
                     {
-                        io_CellsToUpdate.AddLast(m_GameBoard.Matrix[j,i]);
+                        io_CellsToUpdate.Add(m_GameBoard.Matrix[j,i]);
                         j += (int)eDirection.DOWN;
                     }
                 }
@@ -393,7 +393,7 @@ namespace Ex02_Othelo
                     j = i_PlayerMoveRowIndex;
                     for (int i = i_PlayerMoveColumnIndex; i < cellIterator.Column; i++)
                     {
-                        io_CellsToUpdate.AddLast(m_GameBoard.Matrix[j,i]);
+                        io_CellsToUpdate.Add(m_GameBoard.Matrix[j,i]);
                         j += (int)eDirection.UP;
                     }
                 }
@@ -401,7 +401,7 @@ namespace Ex02_Othelo
             return isBlockingLine;
         }
 
-        private bool isHorizontallyBlocking(int i_PlayerMoveRowIndex, int i_PlayerMoveColumnIndex, ref LinkedList<Cell> io_CellsToUpdate, int i_VerticalDirection, int i_HorizontalDirection, bool i_AddCellsToList)
+        private bool isHorizontallyBlocking(int i_PlayerMoveRowIndex, int i_PlayerMoveColumnIndex, ref List<Cell> io_CellsToUpdate, int i_VerticalDirection, int i_HorizontalDirection, bool i_AddCellsToList)
         {
             int currentRow, currentColumn;
             Cell cellIterator = null;
@@ -425,14 +425,14 @@ namespace Ex02_Othelo
                 {
                     for (int i = i_PlayerMoveColumnIndex; i > cellIterator.Column; i--)
                     {
-                        io_CellsToUpdate.AddLast(m_GameBoard.Matrix[i_PlayerMoveRowIndex, i]);
+                        io_CellsToUpdate.Add(m_GameBoard.Matrix[i_PlayerMoveRowIndex, i]);
                     }
                 }
                 else
                 {
                     for (int i = i_PlayerMoveColumnIndex; i < cellIterator.Column; i++)
                     {
-                        io_CellsToUpdate.AddLast(m_GameBoard.Matrix[i_PlayerMoveRowIndex, i]);
+                        io_CellsToUpdate.Add(m_GameBoard.Matrix[i_PlayerMoveRowIndex, i]);
                     }
                 }
             }
@@ -486,7 +486,7 @@ namespace Ex02_Othelo
             return isBlockingLine;
         }
 
-        private bool isVerticallyBlocking(int i_PlayerMoveRowIndex, int i_PlayerMoveColumnIndex, ref LinkedList<Cell> io_CellsToUpdate, int i_VerticalDirection, int i_HorizontalDirection, bool i_AddCellsToList)
+        private bool isVerticallyBlocking(int i_PlayerMoveRowIndex, int i_PlayerMoveColumnIndex, ref List<Cell> io_CellsToUpdate, int i_VerticalDirection, int i_HorizontalDirection, bool i_AddCellsToList)
         {
             int currentRow, currentColumn;
             bool isBlockingLine, isInBoardLimits;
@@ -511,14 +511,14 @@ namespace Ex02_Othelo
                 {
                     for (int i = i_PlayerMoveRowIndex; i > cellIterator.Row; i--)
                     {
-                        io_CellsToUpdate.AddLast(m_GameBoard.Matrix[i, i_PlayerMoveColumnIndex]);
+                        io_CellsToUpdate.Add(m_GameBoard.Matrix[i, i_PlayerMoveColumnIndex]);
                     }
                 }
                 else
                 {
                     for (int i = i_PlayerMoveRowIndex; i < cellIterator.Row; i++)
                     {
-                        io_CellsToUpdate.AddLast(m_GameBoard.Matrix[i, i_PlayerMoveColumnIndex]);
+                        io_CellsToUpdate.Add(m_GameBoard.Matrix[i, i_PlayerMoveColumnIndex]);
                     }
                 }
             }
@@ -629,10 +629,10 @@ namespace Ex02_Othelo
                 cellToBeAddedToOptions4 = new Cell(3, 4);
             }
 
-            m_BlackPlayerOptions.AddLast(cellToBeAddedToOptions1);
-            m_BlackPlayerOptions.AddLast(cellToBeAddedToOptions2);
-            m_BlackPlayerOptions.AddLast(cellToBeAddedToOptions3);
-            m_BlackPlayerOptions.AddLast(cellToBeAddedToOptions4);
+            m_BlackPlayerOptions.Add(cellToBeAddedToOptions1);
+            m_BlackPlayerOptions.Add(cellToBeAddedToOptions2);
+            m_BlackPlayerOptions.Add(cellToBeAddedToOptions3);
+            m_BlackPlayerOptions.Add(cellToBeAddedToOptions4);
         }
 
         private void initializeWhitePlayerOptions()
@@ -657,10 +657,10 @@ namespace Ex02_Othelo
                 cellToBeAddedToOptions4 = new Cell(4, 2);
             }
 
-            m_WhitePlayerOptions.AddLast(cellToBeAddedToOptions1);
-            m_WhitePlayerOptions.AddLast(cellToBeAddedToOptions2);
-            m_WhitePlayerOptions.AddLast(cellToBeAddedToOptions3);
-            m_WhitePlayerOptions.AddLast(cellToBeAddedToOptions4);
+            m_WhitePlayerOptions.Add(cellToBeAddedToOptions1);
+            m_WhitePlayerOptions.Add(cellToBeAddedToOptions2);
+            m_WhitePlayerOptions.Add(cellToBeAddedToOptions3);
+            m_WhitePlayerOptions.Add(cellToBeAddedToOptions4);
         }
 
         private void restartGame()

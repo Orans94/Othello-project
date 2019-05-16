@@ -10,7 +10,7 @@ namespace Ex02_Othelo
         GameUtilities.ePlayerColor m_PlayerColor = GameUtilities.ePlayerColor.BLACK_PLAYER;
 
 
-        public void Play(LinkedList<Cell> i_PcPlayerOptions, GameManager.eGameMode gameMode, out int io_CurrentMoveRowIndex, out int io_CurrentMoveColumnIndex)
+        public void Play(List<Cell> i_PcPlayerOptions, GameManager.eGameMode gameMode, out int io_CurrentMoveRowIndex, out int io_CurrentMoveColumnIndex)
         {
             Random randomMove = new Random();
             int randomNum;

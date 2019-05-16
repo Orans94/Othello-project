@@ -79,7 +79,7 @@ namespace Ex02_Othelo
             }
         }
 
-        public void UpdateBoard(LinkedList<Cell> i_CellsToUpdate, GameUtilities.ePlayerColor i_PlayingPlayer)
+        public void UpdateBoard(List<Cell> i_CellsToUpdate, GameUtilities.ePlayerColor i_PlayingPlayer)
         {
             //this method recieves a list of cells and a player color and put the correct sign in those cells.
             foreach (Cell currentCell in i_CellsToUpdate)
