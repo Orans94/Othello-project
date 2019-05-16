@@ -20,6 +20,10 @@ namespace Ex02_Othelo
             io_CurrentPlayerRowMove = playerMoveString[1] - '1';
         }
 
+        public HumanPlayer(GameUtilities.PlayerColor i_PlayerColor)
+        {
+            m_PlayerColor = i_PlayerColor;
+        }
         public string Name
         {
             //a propertie for m_PlayerName.

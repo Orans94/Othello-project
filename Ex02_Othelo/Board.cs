@@ -99,7 +99,7 @@ namespace Ex02_Othelo
             //checking if the cell given is in board limits.
             bool isCellInBoard;
 
-            isCellInBoard = (i_CellIterator.Row <= (int)Size) && (i_CellIterator.Row >= 0) && (i_CellIterator.Column <= (int)Size) && (i_CellIterator.Column >= 0);
+            isCellInBoard = (i_CellIterator.Row < (int)Size) && (i_CellIterator.Row >= 0) && (i_CellIterator.Column < (int)Size) && (i_CellIterator.Column >= 0);
 
             return isCellInBoard;
         }
