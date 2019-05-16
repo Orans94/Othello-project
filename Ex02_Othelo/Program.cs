@@ -18,8 +18,6 @@ namespace Ex02_Othelo
         {
             GameManager othelo = new GameManager();
             othelo.Run();
-
-            Console.ReadLine();
         }
     }
 }

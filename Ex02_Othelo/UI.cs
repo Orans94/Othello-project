@@ -175,12 +175,14 @@ namespace Ex02_Othelo
 
             Console.WriteLine(string.Format("{0}, please play your turn.", currentPlayer));
             playerMoveInput = Console.ReadLine();
+            playerMoveInput = playerMoveInput.ToUpper();
             isMoveValidate = isPlayerStringValid(playerMoveInput, i_CurrentBoardSize);
 
             while (!isMoveValidate)
             {
                 SyntaxIsntValid();
                 playerMoveInput = Console.ReadLine();
+                playerMoveInput = playerMoveInput.ToUpper();
                 isMoveValidate = isPlayerStringValid(playerMoveInput, i_CurrentBoardSize);
             }
 
@@ -235,15 +237,14 @@ namespace Ex02_Othelo
             bool result;
             char upperCharToValidate;
 
-            upperCharToValidate = char.ToUpper(i_CharToValidate);
 
             if (i_CurrentBoardSize == Board.eBoardSize.bigBoard)
             {
-                result = upperCharToValidate >= 'A' && upperCharToValidate <= 'H';
+                result = i_CharToValidate >= 'A' && i_CharToValidate <= 'H';
             }
             else
             {
-                result = upperCharToValidate >= 'A' && upperCharToValidate <= 'F';
+                result = i_CharToValidate >= 'A' && i_CharToValidate <= 'F';
             }
 
             return result;
@@ -307,7 +308,7 @@ namespace Ex02_Othelo
         public static void ShowExitMessage()
         {
             //this method is printing an exit message
-            Console.WriteLine("Thank you for playing Othello!{0}", Environment.NewLine);
+            Console.WriteLine("Thank you for playing Othello!");
         }
 
     }

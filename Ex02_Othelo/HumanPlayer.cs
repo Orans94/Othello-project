@@ -6,6 +6,7 @@ namespace Ex02_Othelo
 {
     class HumanPlayer
     {
+        public enum UserRequest { EXIT = -1 };
         private string m_PlayerName;
         GameUtilities.PlayerColor m_PlayerColor;
 
@@ -14,15 +15,26 @@ namespace Ex02_Othelo
         public void Play(Board.eBoardSize i_BoardSize, out int io_CurrentPlayerRowMove, out int io_CurrentPlayerColumnMove)
         {
             string playerMoveString;
+            bool isUserRequsetToExit;
 
             playerMoveString = UI.RequestPlayerToPlay(m_PlayerColor, i_BoardSize);
-            io_CurrentPlayerColumnMove = playerMoveString[0] - 'A';
-            io_CurrentPlayerRowMove = playerMoveString[1] - '1';
+            isUserRequsetToExit = playerMoveString.Length == 1;
+            if (isUserRequsetToExit)
+            {
+                io_CurrentPlayerColumnMove = (int)UserRequest.EXIT;
+                io_CurrentPlayerRowMove = (int)UserRequest.EXIT;
+            }
+            else
+            {
+                io_CurrentPlayerColumnMove = playerMoveString[0] - 'A';
+                io_CurrentPlayerRowMove = playerMoveString[1] - '1';
+            }
+
         }
 
         public HumanPlayer(GameUtilities.PlayerColor i_PlayerColor)
         {
-            m_PlayerColor = i_PlayerColor;
+            Color = i_PlayerColor;
         }
         public string Name
         {
@@ -34,6 +46,18 @@ namespace Ex02_Othelo
             set
             {
                  m_PlayerName = value;
+            }
+        }
+        public GameUtilities.PlayerColor Color
+        {
+            //a propertie for m_PlayerName.
+            get
+            {
+                return m_PlayerColor;
+            }
+            set
+            {
+                m_PlayerColor = value;
             }
         }
     }
