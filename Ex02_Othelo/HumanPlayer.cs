@@ -17,7 +17,7 @@ namespace Ex02_Othelo
             string playerMoveString;
             bool isUserRequsetToExit;
 
-            playerMoveString = UI.RequestPlayerToPlay(m_PlayerColor, i_BoardSize);
+            playerMoveString = UI.RequestPlayerToPlay(m_PlayerName, m_PlayerColor, i_BoardSize);
             isUserRequsetToExit = playerMoveString.Length == 1;
             if (isUserRequsetToExit)
             {

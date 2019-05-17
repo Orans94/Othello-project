@@ -30,6 +30,21 @@ namespace Ex02_Othelo
             }
         }
 
+        internal static void PCIsThinkingMessage()
+        {
+            // this method print to console the PC is thinking right now
+            string message = "PC is thinking";
+            string dot = ".";
+            Console.Write(message);
+            System.Threading.Thread.Sleep(700);
+            Console.Write(dot);
+            System.Threading.Thread.Sleep(700);
+            Console.Write(dot);
+            System.Threading.Thread.Sleep(700);
+            Console.Write(dot);
+            System.Threading.Thread.Sleep(700);
+        }
+
         private static void printBoardRowData(Board i_GameBoard, int i_RowIndex)
         {
             //this method is recieving a game board and row index, and prints the board data of that row
@@ -161,24 +176,27 @@ namespace Ex02_Othelo
             return boardSize;
         }
 
-        public static string RequestPlayerToPlay(GameUtilities.ePlayerColor i_PlayerTurn, Board.eBoardSize i_CurrentBoardSize)
+        public static string RequestPlayerToPlay(string i_PlayerName, GameUtilities.ePlayerColor i_PlayerTurn, Board.eBoardSize i_CurrentBoardSize)
         {
             //this method is recieving the player that should play now and asking the player to play
             bool isMoveValidate;
-            string playerMoveInput, currentPlayer;
-            
+            string playerMoveInput, currentPlayerName, currentPlayerColor, currentPlayerSign;
 
+
+            currentPlayerName = i_PlayerName;
             if (i_PlayerTurn == GameUtilities.ePlayerColor.BLACK_PLAYER)
             {
-                currentPlayer = "Black player";
+                currentPlayerColor = "Black";
+                currentPlayerSign = "X";
             }
             else
             {
-                currentPlayer = "White player";
+                currentPlayerColor = "White";
+                currentPlayerSign = "O";
             }
 
 
-            Console.WriteLine(string.Format("{0}, please play your turn.", currentPlayer));
+            Console.WriteLine(string.Format("{0} player {1}, please play your turn => {2}.", currentPlayerColor,currentPlayerName,currentPlayerSign));
             playerMoveInput = Console.ReadLine();
             playerMoveInput = playerMoveInput.ToUpper();
             isMoveValidate = isPlayerStringValid(playerMoveInput, i_CurrentBoardSize);

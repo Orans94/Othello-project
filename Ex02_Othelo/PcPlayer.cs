@@ -16,6 +16,7 @@ namespace Ex02_Othelo
             int randomNum;
             Cell randomedCell = new Cell();
 
+            UI.PCIsThinkingMessage();
             randomNum = randomMove.Next(i_PcPlayerOptions.Count);
             randomedCell = i_PcPlayerOptions[randomNum];
 
