@@ -6,6 +6,10 @@ namespace Ex02_Othelo
 {
     class GameUtilities
     {
-        public enum ePlayerColor { BLACK_PLAYER = 'X', WHITE_PLAYER = 'O'};
+        public enum ePlayerColor
+        {
+            BlackPlayer = 'X',
+            WhitePlayer = 'O'
+        };
     }
 }

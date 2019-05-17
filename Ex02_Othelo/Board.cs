@@ -6,15 +6,19 @@ namespace Ex02_Othelo
 {
     class Board
     {
-        public enum eBoardSize { smallBoard = 6, bigBoard = 8 };
+        public enum eBoardSize
+        { 
+            smallBoard = 6,
+            bigBoard = 8
+        }
+        
         private eBoardSize m_BoardSize;
         private Cell[,] m_Board;
-
+        
         public Board(eBoardSize i_BoardSize)
         {
             //create board according to the size that the user chose.
             m_BoardSize = i_BoardSize;
-
             m_Board = new Cell[(int)i_BoardSize, (int)i_BoardSize];
             for (int rowIndex = 0; rowIndex < (int)i_BoardSize; rowIndex++)
             {
@@ -29,17 +33,21 @@ namespace Ex02_Othelo
         {
             get
             {
+
                 return m_BoardSize;
             }
+
             set
             {
                 m_BoardSize = value;
             }
         }
+
         public Cell[,] Matrix
         {
             get
             {
+
                 return m_Board;
             }
         }
@@ -86,6 +94,7 @@ namespace Ex02_Othelo
             {
                 m_Board[currentCell.Row, currentCell.Column].Sign = (char)i_PlayingPlayer;
             }
+
             i_CellsToUpdate.Clear();
         }
 
@@ -109,6 +118,7 @@ namespace Ex02_Othelo
 
             return isCellInBoard;
         }
+
         public bool IsCellInBoard(int i_CellRowIndex, int i_CellColumnIndex)
         {
             //checking if the indices given is in board limits.
@@ -118,8 +128,6 @@ namespace Ex02_Othelo
 
             return isCellInBoard;
         }
-
-
 
         public int CountSignAppearances(char i_Sign)
         {

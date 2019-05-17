@@ -7,8 +7,8 @@ namespace Ex02_Othelo
     class PcPlayer
     {
         private string m_PlayerName = "PC";
-        GameUtilities.ePlayerColor m_PlayerColor = GameUtilities.ePlayerColor.BLACK_PLAYER;
-        private int m_PlayerScore = 0;
+        private int m_PlayerScore = 2;
+        private bool m_isPlayerPlaying = false;
 
         public void Play(List<Cell> i_PcPlayerOptions, GameManager.eGameMode gameMode, out int io_CurrentMoveRowIndex, out int io_CurrentMoveColumnIndex)
         {
@@ -33,6 +33,25 @@ namespace Ex02_Othelo
             set
             {
                 m_PlayerScore = value;
+            }
+        }
+        public string Name
+        {
+            get
+            {
+                return m_PlayerName;
+            }
+        }
+        public bool Active
+        {
+            get
+            {
+
+                return m_isPlayerPlaying;
+            }
+            set
+            {
+                m_isPlayerPlaying = value;
             }
         }
     }

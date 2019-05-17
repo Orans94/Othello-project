@@ -4,23 +4,21 @@ using System.Text;
 
 namespace Ex02_Othelo
 {
-
     //TODO: after every time i recieve input from user, check if its valid. if not, ask again(also use TryParse().
     //When you make a class(not a struct) an object of that class is actually a ref type(like a pointer).
     class UI
     {
-
         public static void Clear()
         {
             //this method clears the screen using the dll referenced.
             Ex02.ConsoleUtils.Screen.Clear();
         }
 
-        public static void Draw(Board i_GameBoard)
+        public static void Draw(Board i_GameBoard,HumanPlayer i_WhiteHumanPlayer,HumanPlayer i_BlackHumanPlayer, PcPlayer i_BlackPCPlayer)
         {
             //this method recieves a board and drawing it.
             StringBuilder stringBuilder = new StringBuilder("", 36);
-
+            printPlayersScore(i_WhiteHumanPlayer, i_BlackHumanPlayer, i_BlackPCPlayer);
             printFirstLine(i_GameBoard.Size);
             printLineOfEqualSign(i_GameBoard.Size);
             for (int i = 0; i < (int)i_GameBoard.Size; i++)
@@ -30,7 +28,22 @@ namespace Ex02_Othelo
             }
         }
 
-        internal static void PCIsThinkingMessage()
+        private static void printPlayersScore(HumanPlayer i_WhiteHumanPlayer, HumanPlayer i_BlackHumanPlayer, PcPlayer i_BlackPCPlayer)
+        {
+            string whitePlayerName, blackPlayerName;
+            int whitePlayerScore, blackPlayerScore;
+
+            whitePlayerName = i_WhiteHumanPlayer.Name;
+            blackPlayerName = i_BlackHumanPlayer.Active == true ? i_BlackHumanPlayer.Name : i_BlackPCPlayer.Name;
+            whitePlayerScore = i_WhiteHumanPlayer.Score;
+            blackPlayerScore = i_BlackHumanPlayer.Active == true ? i_BlackHumanPlayer.Score : i_BlackPCPlayer.Score;
+
+            String scoreMessage = string.Format("{0} : {1}              {2} : {3}",
+                whitePlayerName, whitePlayerScore, blackPlayerName, blackPlayerScore);
+            Console.WriteLine(scoreMessage);
+        }
+
+        public static void PCIsThinkingMessage()
         {
             // this method print to console the PC is thinking right now
             string message = "PC is thinking";
@@ -64,6 +77,7 @@ namespace Ex02_Othelo
 
             Console.WriteLine(lineOfMatrixData);
         }
+
         private static void printFirstLine(Board.eBoardSize boardSize)
         {
             //this method prints the first line
@@ -76,6 +90,7 @@ namespace Ex02_Othelo
                 Console.WriteLine("    A   B   C   D   E   F  ");
             }
         }
+
         private static void printLineOfEqualSign(Board.eBoardSize boardSize)
         {
             //this method prints a line of equal signs according to the board size
@@ -128,7 +143,6 @@ namespace Ex02_Othelo
             return gameMode;
         }
 
-
         private static bool isUserChoiceValid(string userChoiceString)
         {
             bool isValidLength, isValidChar, result;
@@ -151,7 +165,6 @@ namespace Ex02_Othelo
             Console.WriteLine("Please choose board size:{0}1.6x6{0}2.8x8", Environment.NewLine);
             userBoardSizeChoiceString = Console.ReadLine();
             Ex02.ConsoleUtils.Screen.Clear();
-
             isChoiceValid = isUserChoiceValid(userBoardSizeChoiceString);
             while (!isChoiceValid)
             {
@@ -171,8 +184,6 @@ namespace Ex02_Othelo
                 boardSize = Board.eBoardSize.smallBoard;
             }
 
-            
-            
             return boardSize;
         }
 
@@ -182,9 +193,8 @@ namespace Ex02_Othelo
             bool isMoveValidate;
             string playerMoveInput, currentPlayerName, currentPlayerColor, currentPlayerSign;
 
-
             currentPlayerName = i_PlayerName;
-            if (i_PlayerTurn == GameUtilities.ePlayerColor.BLACK_PLAYER)
+            if (i_PlayerTurn == GameUtilities.ePlayerColor.BlackPlayer)
             {
                 currentPlayerColor = "Black";
                 currentPlayerSign = "X";
@@ -195,12 +205,10 @@ namespace Ex02_Othelo
                 currentPlayerSign = "O";
             }
 
-
             Console.WriteLine(string.Format("{0} player {1}, please play your turn => {2}.", currentPlayerColor,currentPlayerName,currentPlayerSign));
             playerMoveInput = Console.ReadLine();
             playerMoveInput = playerMoveInput.ToUpper();
             isMoveValidate = isPlayerStringValid(playerMoveInput, i_CurrentBoardSize);
-
             while (!isMoveValidate)
             {
                 SyntaxIsntValid();
@@ -234,8 +242,8 @@ namespace Ex02_Othelo
                     result = false;
 
                 }
-
             }
+
             return result;
         }
 
@@ -288,7 +296,7 @@ namespace Ex02_Othelo
             StringBuilder winnerDeclerationMessage = new StringBuilder("", 60);
             string winnerColor;
 
-            if(i_WinnerColor == GameUtilities.ePlayerColor.BLACK_PLAYER)
+            if(i_WinnerColor == GameUtilities.ePlayerColor.BlackPlayer)
             {
                 winnerColor = "Black player";
             }
@@ -333,12 +341,11 @@ namespace Ex02_Othelo
             Console.WriteLine("Thank you for playing Othello!");
         }
 
-        internal static void DeclareDraw(int i_WhitePlayerScore, int i_BlackPlayerScore)
+        public static void DeclareDraw(int i_WhitePlayerScore, int i_BlackPlayerScore)
         {
             // this method declare on draw score situation
             string scoreAndDeclareDrawMessage = string.Format("White player score: {1}{0}Black player score: {2}{0} Their is a DRAW!",
                 Environment.NewLine, i_WhitePlayerScore, i_BlackPlayerScore);
-
             Console.WriteLine(scoreAndDeclareDrawMessage);
         }
     }
