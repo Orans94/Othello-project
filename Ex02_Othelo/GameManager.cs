@@ -317,24 +317,44 @@ namespace Ex02_Othelo
 
         }
 
-        private bool isDiagonallyTwoBlocking(int i_PlayerMoveRowIndex, int i_PlayerMoveColumnIndex, ref List<Cell> io_CellsToUpdate, int i_VerticalDirection, int i_HorizontalDirection, bool i_AddCellsToList)
+        private bool isBlockingLine(int i_PlayerMoveRowIndex, int i_PlayerMoveColumnIndex, int i_VerticalDirection, int i_HorizontalDirection, out Cell o_CellIterator)
         {
+
             int currentRow, currentColumn, j;
-            Cell cellIterator = null;
-            bool isBlockingLine, isInBoardLimits;
+            Cell cellIterator;
+            bool isBlockFound, isInBoardLimits;
 
             currentRow = i_PlayerMoveRowIndex + i_VerticalDirection;
             currentColumn = i_PlayerMoveColumnIndex + i_HorizontalDirection;
 
             isInBoardLimits = GameBoard.IsCellInBoard(currentRow, currentColumn);
-            isBlockingLine = false;
+            isBlockFound = false;
             if (isInBoardLimits)
             {
                 cellIterator = new Cell(currentRow, currentColumn, m_GameBoard.Matrix[currentRow, currentColumn].Sign);
-                isBlockingLine = isSeriesFound(ref cellIterator, i_VerticalDirection, i_HorizontalDirection);
+                isBlockFound = isSeriesFound(ref cellIterator, i_VerticalDirection, i_HorizontalDirection);
+            }
+            else
+            {
+                //cellIterator = new Cell(-1, -1);
+                cellIterator = null;
             }
 
-            if (isBlockingLine && i_AddCellsToList == true)
+            o_CellIterator = cellIterator;
+
+            return isBlockFound;
+
+        }
+        private bool isDiagonallyTwoBlocking(int i_PlayerMoveRowIndex, int i_PlayerMoveColumnIndex, ref List<Cell> io_CellsToUpdate, int i_VerticalDirection, int i_HorizontalDirection, bool i_AddCellsToList)
+        {
+            //int currentRow, currentColumn, j;
+            Cell cellIterator = null;
+            bool isBlockFound;
+            int j;
+
+            isBlockFound = isBlockingLine(i_PlayerMoveRowIndex, i_PlayerMoveColumnIndex, i_VerticalDirection, i_HorizontalDirection, out cellIterator);
+
+            if (isBlockFound && i_AddCellsToList == true)
             {
                 if (i_HorizontalDirection == (int)eDirection.LEFT && i_VerticalDirection == (int)eDirection.UP)
                 {
@@ -355,29 +375,18 @@ namespace Ex02_Othelo
                     }
                 }
             }
-            return isBlockingLine;
+            return isBlockFound;
         }
 
         private bool isDiagonallyOneBlocking(int i_PlayerMoveRowIndex, int i_PlayerMoveColumnIndex, ref List<Cell> io_CellsToUpdate, int i_VerticalDirection, int i_HorizontalDirection, bool i_AddCellsToList)
         {
-            int currentRow, currentColumn, j;
             Cell cellIterator = null;
-            bool isBlockingLine, isInBoardLimits;
+            bool isBlockFound;
+            int j;
 
-            currentRow = i_PlayerMoveRowIndex + i_VerticalDirection;
-            currentColumn = i_PlayerMoveColumnIndex + i_HorizontalDirection;
+            isBlockFound = isBlockingLine(i_PlayerMoveRowIndex, i_PlayerMoveColumnIndex, i_VerticalDirection, i_HorizontalDirection, out cellIterator);
 
-            isInBoardLimits = m_GameBoard.IsCellInBoard(currentRow, currentColumn);
-            isBlockingLine = false;
-            if (isInBoardLimits)
-            {
-                cellIterator = new Cell(currentRow, currentColumn, m_GameBoard.Matrix[currentRow, currentColumn].Sign);
-                isBlockingLine = isSeriesFound(ref cellIterator, i_VerticalDirection, i_HorizontalDirection);
-
-            }
-
-
-            if (isBlockingLine && i_AddCellsToList == true)
+            if (isBlockFound && i_AddCellsToList == true)
             {
                 if (i_HorizontalDirection == (int)eDirection.LEFT && i_VerticalDirection == (int)eDirection.DOWN)
                 {
@@ -398,28 +407,17 @@ namespace Ex02_Othelo
                     }
                 }
             }
-            return isBlockingLine;
+            return isBlockFound;
         }
 
         private bool isHorizontallyBlocking(int i_PlayerMoveRowIndex, int i_PlayerMoveColumnIndex, ref List<Cell> io_CellsToUpdate, int i_VerticalDirection, int i_HorizontalDirection, bool i_AddCellsToList)
         {
-            int currentRow, currentColumn;
             Cell cellIterator = null;
-            bool isBlockingLine, isInBoardLimits;
+            bool isBlockFound;
 
-            currentRow = i_PlayerMoveRowIndex + i_VerticalDirection;
-            currentColumn = i_PlayerMoveColumnIndex + i_HorizontalDirection;
+            isBlockFound = isBlockingLine(i_PlayerMoveRowIndex, i_PlayerMoveColumnIndex, i_VerticalDirection, i_HorizontalDirection, out cellIterator);
 
-            isInBoardLimits = m_GameBoard.IsCellInBoard(currentRow, currentColumn);
-            isBlockingLine = false;
-            if (isInBoardLimits)
-            {
-                cellIterator = new Cell(currentRow, currentColumn, m_GameBoard.Matrix[currentRow, currentColumn].Sign);
-                isBlockingLine = isSeriesFound(ref cellIterator, i_VerticalDirection, i_HorizontalDirection);
-            }
-
-
-            if (isBlockingLine && i_AddCellsToList == true)
+            if (isBlockFound && i_AddCellsToList == true)
             {
                 if (i_HorizontalDirection == (int)eDirection.LEFT)
                 {
@@ -436,7 +434,7 @@ namespace Ex02_Othelo
                     }
                 }
             }
-            return isBlockingLine;
+            return isBlockFound;
         }
 
 
@@ -488,24 +486,12 @@ namespace Ex02_Othelo
 
         private bool isVerticallyBlocking(int i_PlayerMoveRowIndex, int i_PlayerMoveColumnIndex, ref List<Cell> io_CellsToUpdate, int i_VerticalDirection, int i_HorizontalDirection, bool i_AddCellsToList)
         {
-            int currentRow, currentColumn;
-            bool isBlockingLine, isInBoardLimits;
             Cell cellIterator = null;
+            bool isBlockFound;
 
-            currentRow = i_PlayerMoveRowIndex + i_VerticalDirection;
-            currentColumn = i_PlayerMoveColumnIndex + i_HorizontalDirection;
+            isBlockFound = isBlockingLine(i_PlayerMoveRowIndex, i_PlayerMoveColumnIndex, i_VerticalDirection, i_HorizontalDirection, out cellIterator);
 
-            isInBoardLimits = m_GameBoard.IsCellInBoard(currentRow, currentColumn);
-            isBlockingLine = false;
-            if (isInBoardLimits)
-            {
-                cellIterator = new Cell(currentRow, currentColumn, m_GameBoard.Matrix[currentRow, currentColumn].Sign);
-                isBlockingLine = isSeriesFound(ref cellIterator, i_VerticalDirection, i_HorizontalDirection);
-
-            }
-         
-
-            if (isBlockingLine && i_AddCellsToList == true)
+            if (isBlockFound && i_AddCellsToList == true)
             {
                 if (i_VerticalDirection == (int)eDirection.UP)
                 {
@@ -522,7 +508,7 @@ namespace Ex02_Othelo
                     }
                 }
             }
-            return isBlockingLine;
+            return isBlockFound;
 
         }
 
@@ -586,12 +572,17 @@ namespace Ex02_Othelo
             if (whitePlayerScore > blackPlayerScore)
             {
                 winner = GameUtilities.ePlayerColor.WHITE_PLAYER;
+                UI.DeclareWinner(whitePlayerScore, blackPlayerScore, winner);
+            }
+            else if (whitePlayerScore < blackPlayerScore)
+            {
+                winner = GameUtilities.ePlayerColor.BLACK_PLAYER;
+                UI.DeclareWinner(whitePlayerScore, blackPlayerScore, winner);
             }
             else
             {
-                winner = GameUtilities.ePlayerColor.BLACK_PLAYER;
+                UI.DeclareDraw(whitePlayerScore, blackPlayerScore);
             }
-            UI.DeclareWinner(whitePlayerScore, blackPlayerScore, winner);
         }
 
         private void initializePlayersOptions()

@@ -8,7 +8,7 @@ namespace Ex02_Othelo
     {
         private string m_PlayerName = "PC";
         GameUtilities.ePlayerColor m_PlayerColor = GameUtilities.ePlayerColor.BLACK_PLAYER;
-
+        private int m_PlayerScore = 0;
 
         public void Play(List<Cell> i_PcPlayerOptions, GameManager.eGameMode gameMode, out int io_CurrentMoveRowIndex, out int io_CurrentMoveColumnIndex)
         {
@@ -22,6 +22,18 @@ namespace Ex02_Othelo
 
             io_CurrentMoveColumnIndex = randomedCell.Column;
             io_CurrentMoveRowIndex = randomedCell.Row;
+        }
+
+        public int Score
+        {
+            get
+            {
+                return m_PlayerScore;
+            }
+            set
+            {
+                m_PlayerScore = value;
+            }
         }
     }
 }

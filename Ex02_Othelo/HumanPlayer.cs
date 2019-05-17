@@ -9,6 +9,7 @@ namespace Ex02_Othelo
         public enum eUserRequest { EXIT = -1 };
         private string m_PlayerName;
         GameUtilities.ePlayerColor m_PlayerColor;
+        private int m_PlayerScore = 0;
 
         // This method ask from the player to play till his input is valid, then it return his move by ref
         // Example for valid move - "E3", then io_CurrentPlayerColumnMove will hold 4 and io_CurrentPlayerRowMove will hold 2
@@ -46,6 +47,18 @@ namespace Ex02_Othelo
             set
             {
                  m_PlayerName = value;
+            }
+        }
+
+        public int Score
+        {
+            get
+            {
+                return m_PlayerScore;
+            }
+            set
+            {
+                m_PlayerScore = value;
             }
         }
         public GameUtilities.ePlayerColor Color

@@ -333,5 +333,13 @@ namespace Ex02_Othelo
             Console.WriteLine("Thank you for playing Othello!");
         }
 
+        internal static void DeclareDraw(int i_WhitePlayerScore, int i_BlackPlayerScore)
+        {
+            // this method declare on draw score situation
+            string scoreAndDeclareDrawMessage = string.Format("White player score: {1}{0}Black player score: {2}{0} Their is a DRAW!",
+                Environment.NewLine, i_WhitePlayerScore, i_BlackPlayerScore);
+
+            Console.WriteLine(scoreAndDeclareDrawMessage);
+        }
     }
 }
