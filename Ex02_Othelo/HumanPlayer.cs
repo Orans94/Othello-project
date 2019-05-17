@@ -11,7 +11,7 @@ namespace Ex02_Othelo
             Exit = -1
         };
         private string m_PlayerName;
-        private int m_PlayerScore = 2;
+        private int m_PlayerScore;
         private bool m_isPlayerPlaying = false;
         GameUtilities.ePlayerColor m_PlayerColor;
 

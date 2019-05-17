@@ -46,7 +46,7 @@ namespace Ex02_Othelo
             eGameDecision rematchOrExit;
 
             configureGameSettings(whiteHumanPlayer, blackHumanPlayer, blackPCPlayer);
-            initialize();
+            initialize(whiteHumanPlayer, blackHumanPlayer, blackPCPlayer);
             while (true)
             {
                 UI.Draw(m_GameBoard, whiteHumanPlayer, blackHumanPlayer, blackPCPlayer);
@@ -82,7 +82,7 @@ namespace Ex02_Othelo
                     rematchOrExit = UI.AskUserForRematchOrExit();
                     if (rematchOrExit == eGameDecision.Rematch)
                     {
-                        restartGame();
+                        restartGame(whiteHumanPlayer, blackHumanPlayer, blackPCPlayer);
                     }
                     else
                     {
@@ -138,11 +138,19 @@ namespace Ex02_Othelo
             m_GameBoard = new Board(userBoardSizeChoice);
         }
 
-        private void initialize()
+        private void initialize(HumanPlayer i_WhiteHumanPlayer, HumanPlayer i_BlackHumanPlayer, PcPlayer i_BlackPCPlayer)
         {
             m_GameBoard.Initialize();
             initializePlayersOptions();
+            initializePlayersScores(i_WhiteHumanPlayer, i_BlackHumanPlayer, i_BlackPCPlayer);
             m_PlayerTurn = GameUtilities.ePlayerColor.WhitePlayer;
+        }
+
+        private void initializePlayersScores(HumanPlayer i_WhiteHumanPlayer, HumanPlayer i_BlackHumanPlayer, PcPlayer i_BlackPCPlayer)
+        {
+            i_WhiteHumanPlayer.Score = 2;
+            i_BlackHumanPlayer.Score = 2;
+            i_BlackPCPlayer.Score = 2;
         }
 
         private void turnChangingManager()
@@ -689,10 +697,10 @@ namespace Ex02_Othelo
             m_WhitePlayerOptions.Add(cellToBeAddedToOptions4);
         }
 
-        private void restartGame()
+        private void restartGame(HumanPlayer i_WhiteHumanPlayer, HumanPlayer i_BlackHumanPlayer, PcPlayer i_BlackPCPlayer)
         {
             //this method restarts a game.
-            initialize();
+            initialize(i_WhiteHumanPlayer, i_BlackHumanPlayer, i_BlackPCPlayer);
         }
 
         private void exitGame()
