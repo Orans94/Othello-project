@@ -6,7 +6,7 @@ namespace Ex02_Othelo
 {
     //TODO: after every time i recieve input from user, check if its valid. if not, ask again(also use TryParse().
     //When you make a class(not a struct) an object of that class is actually a ref type(like a pointer).
-    class UI
+    public class UI
     {
         public static void Clear()
         {
@@ -19,6 +19,18 @@ namespace Ex02_Othelo
             //this method recieves a board and drawing it.
             StringBuilder stringBuilder = new StringBuilder("", 36);
             printPlayersScore(i_WhiteHumanPlayer, i_BlackHumanPlayer, i_BlackPCPlayer);
+            printFirstLine(i_GameBoard.Size);
+            printLineOfEqualSign(i_GameBoard.Size);
+            for (int i = 0; i < (int)i_GameBoard.Size; i++)
+            {
+                printBoardRowData(i_GameBoard, i);
+                printLineOfEqualSign(i_GameBoard.Size);
+            }
+        }
+        public static void Draw(Board i_GameBoard) // DELETE
+        {
+            //this method recieves a board and drawing it.
+            StringBuilder stringBuilder = new StringBuilder("", 36);
             printFirstLine(i_GameBoard.Size);
             printLineOfEqualSign(i_GameBoard.Size);
             for (int i = 0; i < (int)i_GameBoard.Size; i++)

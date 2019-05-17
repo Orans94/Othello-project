@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 namespace Ex02_Othelo
 {
-    class GameManager
+    public class GameManager
     {
         public enum eGameMode 
         { 
@@ -27,8 +27,8 @@ namespace Ex02_Othelo
         }
 
         private Board m_GameBoard;
-        private List<Cell> m_BlackPlayerOptions;
-        private List<Cell> m_WhitePlayerOptions;
+        private List<Cell> m_BlackPlayerOptions = new List<Cell>();
+        private List<Cell> m_WhitePlayerOptions = new List<Cell>();
         private GameUtilities.ePlayerColor m_PlayerTurn;
         private eGameMode m_GameMode;
 
@@ -41,8 +41,8 @@ namespace Ex02_Othelo
             int currentPlayerMoveRowIndex, currentPlayerMoveColumnIndex;
             bool isPlayerMoveLegal, isGameEnd = false;
             List<Cell> cellsToUpdate = new List<Cell>();
-            m_BlackPlayerOptions = new List<Cell>();
-            m_WhitePlayerOptions = new List<Cell>();
+            //m_BlackPlayerOptions = new List<Cell>();
+            //m_WhitePlayerOptions = new List<Cell>();
             eGameDecision rematchOrExit;
 
             configureGameSettings(whiteHumanPlayer, blackHumanPlayer, blackPCPlayer);
@@ -52,6 +52,8 @@ namespace Ex02_Othelo
                 UI.Draw(m_GameBoard, whiteHumanPlayer, blackHumanPlayer, blackPCPlayer);
                 do
                 {
+                    //UI.Draw(m_GameBoard, whiteHumanPlayer, blackHumanPlayer, blackPCPlayer); // DELETE
+
                     tellCurrentPlayerToPlay(blackHumanPlayer, whiteHumanPlayer, blackPCPlayer, m_BlackPlayerOptions,
                         out currentPlayerMoveRowIndex, out currentPlayerMoveColumnIndex);
                     if (currentPlayerMoveColumnIndex == (int)HumanPlayer.eUserRequest.Exit)
@@ -59,7 +61,8 @@ namespace Ex02_Othelo
                         isGameEnd = true;
                         break;
                     }
-                    
+                    //UI.Draw(m_GameBoard, whiteHumanPlayer, blackHumanPlayer, blackPCPlayer); // DELETE
+
                     isPlayerMoveLegal = isLegalMove(currentPlayerMoveRowIndex, currentPlayerMoveColumnIndex, ref cellsToUpdate);
                 }
                 while (!isPlayerMoveLegal);
@@ -94,6 +97,16 @@ namespace Ex02_Othelo
             UI.ShowExitMessage();
             System.Threading.Thread.Sleep(5000);
         }
+        public GameManager (Board i_GameBoard, GameUtilities.ePlayerColor i_PlayerTurn)
+        {
+            Board copiedBoard = i_GameBoard;
+            m_GameBoard = copiedBoard;
+            m_PlayerTurn = i_PlayerTurn;
+        }
+        public GameManager()
+        {
+        }
+
 
         private void updatePlayersScore(HumanPlayer i_WhiteHumanPlayer, HumanPlayer i_BlackHumanPlayer, PcPlayer i_BlackPCPlayer)
         {
@@ -185,7 +198,7 @@ namespace Ex02_Othelo
             {
                 if (m_PlayerTurn == GameUtilities.ePlayerColor.BlackPlayer)
                 {
-                    i_BlackPcPlayer.Play(i_BlackPcPlayerOptions, m_GameMode, out io_CurrentMoveRowIndex, out io_CurrentMoveColumnIndex);
+                    i_BlackPcPlayer.Play(m_GameBoard, m_GameMode, out io_CurrentMoveRowIndex, out io_CurrentMoveColumnIndex);
                 }
                 else
                 {
@@ -203,7 +216,6 @@ namespace Ex02_Othelo
 
                 return m_GameBoard;
             }
-            //TODO: ask guy about better way to initilzie the Board.
             //set
             //{
             //    m_GameBoard = new Board(value);
@@ -228,7 +240,7 @@ namespace Ex02_Othelo
             }
         }
 
-        private void updatePlayersOptions()
+        public void updatePlayersOptions()
         {
             List<Cell> cellList = new List<Cell>();
             GameUtilities.ePlayerColor lastPlayerTurn;
@@ -344,7 +356,7 @@ namespace Ex02_Othelo
             return areCellsEqual;
         }
 
-        private bool isPlayerMoveBlockingEnemy(int i_PlayerMoveRowIndex, int i_PlayerMoveColumnIndex, ref List<Cell> io_CellsToUpdate, bool i_AddCellsToList = true)
+        public bool isPlayerMoveBlockingEnemy(int i_PlayerMoveRowIndex, int i_PlayerMoveColumnIndex, ref List<Cell> io_CellsToUpdate, bool i_AddCellsToList = true)
         {
             //this method recieves a player move and return true if the move is blocking the enemy.
             //its also updates the list of cells to update.

@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Ex02_Othelo
 {
-    class HumanPlayer
+    public class HumanPlayer
     {
         public enum eUserRequest
         {
