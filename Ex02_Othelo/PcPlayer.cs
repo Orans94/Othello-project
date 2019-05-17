@@ -17,8 +17,8 @@ namespace Ex02_Othelo
             Cell randomedCell = new Cell();
 
             randomNum = randomMove.Next(i_PcPlayerOptions.Count);
-            //randomedCell = i_PcPlayerOptions.ElemantAt(randomNum);
-            
+            randomedCell = i_PcPlayerOptions[randomNum];
+
             io_CurrentMoveColumnIndex = randomedCell.Column;
             io_CurrentMoveRowIndex = randomedCell.Row;
         }
