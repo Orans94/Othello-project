@@ -1,8 +1,0 @@
-C:\Users\orans\source\repos\Ex02_Othelo\Ex02_Othelo\bin\Debug\Ex02_Othelo.exe
-C:\Users\orans\source\repos\Ex02_Othelo\Ex02_Othelo\bin\Debug\Ex02_Othelo.pdb
-C:\Users\orans\source\repos\Ex02_Othelo\Ex02_Othelo\bin\Debug\Ex02.ConsoleUtils.dll
-C:\Users\orans\source\repos\Ex02_Othelo\Ex02_Othelo\obj\Debug\Ex02_Othelo.csprojAssemblyReference.cache
-C:\Users\orans\source\repos\Ex02_Othelo\Ex02_Othelo\obj\Debug\Ex02_Othelo.csproj.CoreCompileInputs.cache
-C:\Users\orans\source\repos\Ex02_Othelo\Ex02_Othelo\obj\Debug\Ex02_Othelo.csproj.CopyComplete
-C:\Users\orans\source\repos\Ex02_Othelo\Ex02_Othelo\obj\Debug\Ex02_Othelo.exe
-C:\Users\orans\source\repos\Ex02_Othelo\Ex02_Othelo\obj\Debug\Ex02_Othelo.pdb
