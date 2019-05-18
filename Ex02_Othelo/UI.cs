@@ -66,8 +66,8 @@ namespace Ex02_Othelo
             System.Threading.Thread.Sleep(700);
             Console.Write(dot);
             System.Threading.Thread.Sleep(700);
-            Console.Write(dot);
-            System.Threading.Thread.Sleep(700);
+            Console.WriteLine(dot);
+            
         }
 
         private static void printBoardRowData(Board i_GameBoard, int i_RowIndex)
