@@ -22,7 +22,7 @@ namespace Ex02_Othelo
 
             if (i_Depth == 0 || isGameOver(i_GameBoardState, i_MaximizingPlayer))
             {
-                return heuristic(i_GameBoardState);
+                return heuristic2(i_GameBoardState, i_MaximizingPlayer);
             }
             else
             {
@@ -39,7 +39,7 @@ namespace Ex02_Othelo
 
                         gameMangaerAI.isPlayerMoveBlockingEnemy(cellIteator.Row, cellIteator.Column, ref playerOptionList);
                         copiedBoard.UpdateBoard(playerOptionList, i_MaximizingPlayer);
-                        //UI.Draw(copiedBoard); // DELETE
+                       // UI.Draw(copiedBoard); // DELETE
                         eval = Minmax(copiedBoard, i_Depth - 1, GameUtilities.ePlayerColor.WhitePlayer,ref io_Cell, ref listOfKeyValue);
                         if (eval > maxEval)
                         {
@@ -72,7 +72,10 @@ namespace Ex02_Othelo
                         eval = Minmax(copiedBoard, i_Depth - 1, GameUtilities.ePlayerColor.BlackPlayer, ref io_Cell, ref listOfKeyValue);
                         if (eval < minEval)
                         {
-                           // io_Cell.Row = cellIteator.Row;
+                            playerMoveList.Add(io_Cell);
+                            pair = new KeyValuePair<int, List<Cell>>(eval, playerMoveList);
+                            listOfKeyValue.Add(pair);
+                            // io_Cell.Row = cellIteator.Row;
                             //io_Cell.Column = cellIteator.Column;
                             minEval = eval;
                         }
@@ -116,7 +119,7 @@ namespace Ex02_Othelo
             Cell chosenCell = new Cell();
             List<KeyValuePair<int, List<Cell>>> listOfKeyValue = new List<KeyValuePair<int, List<Cell>>>();
 
-            minmaxOutput = Minmax(i_GameBoard, 5, GameUtilities.ePlayerColor.BlackPlayer, ref chosenCell, ref listOfKeyValue);
+            minmaxOutput = Minmax(i_GameBoard, 2, GameUtilities.ePlayerColor.BlackPlayer, ref chosenCell, ref listOfKeyValue);
 
             listOfKeyValue.Sort((x, y) => x.Key.CompareTo(y.Key));
 
@@ -126,6 +129,43 @@ namespace Ex02_Othelo
             io_CurrentMoveRowIndex = listOfKeyValue[listOfKeyValue.Count-1].Value[0].Row;
             io_CurrentMoveColumnIndex = listOfKeyValue[listOfKeyValue.Count-1].Value[0].Column;
 
+        }
+        private static int getCornersHeuristic(Board i_Board, char i_Sign)
+        {
+            int res = 0;
+            int edge = (int)i_Board.Size - 1;
+            Cell[] corners =
+                {
+                i_Board.Matrix[0, edge],
+                i_Board.Matrix[0, 0],
+                i_Board.Matrix[edge, edge],
+                i_Board.Matrix[edge, 0]
+            };
+
+            foreach (Cell corner in corners)
+            {
+                if (corner.Sign == i_Sign)
+                {
+                    res += 20;
+                }
+            }
+
+            return res;
+        }
+
+        private static int heuristic2( Board i_Board, GameUtilities.ePlayerColor i_playerTurn)
+        {
+            int res = 0;
+            int whiteCharsInBoard, blackCharsInBoard, difference;
+            char sign;
+
+            whiteCharsInBoard = i_Board.CountSignAppearances('O');
+            blackCharsInBoard = i_Board.CountSignAppearances('X');
+            difference = blackCharsInBoard - whiteCharsInBoard;
+
+            sign = i_playerTurn == GameUtilities.ePlayerColor.BlackPlayer ? 'X' : 'O';
+            res += getCornersHeuristic(i_Board, sign);
+            return res + difference;
         }
     }
 }
