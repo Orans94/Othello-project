@@ -4,30 +4,28 @@ using System.Text;
 
 namespace Ex02_Othelo
 {
-    class PcPlayer
+    public class PcPlayer
     {
         private string m_PlayerName = "PC";
         private int m_PlayerScore;
         private bool m_isPlayerPlaying = false;
 
-        public void Play(List<Cell> i_PcPlayerOptions, GameManager.eGameMode gameMode, out int io_CurrentMoveRowIndex, out int io_CurrentMoveColumnIndex)
+        public void Play(Board i_GameBoard, GameManager.eGameMode gameMode, out int io_CurrentMoveRowIndex, out int io_CurrentMoveColumnIndex)
         {
             Random randomMove = new Random();
             int randomNum;
             Cell randomedCell = new Cell();
-            AI computerIntelligence;
 
             UI.PCIsThinkingMessage();
-            randomNum = randomMove.Next(i_PcPlayerOptions.Count);
-            randomedCell = i_PcPlayerOptions[randomNum];
+            //randomNum = randomMove.Next(i_PcPlayerOptions.Count);
+            //randomedCell = i_PcPlayerOptions[randomNum];
 
             // ===================================
-
-            //AI.PCPlay(out io_CurrentMoveRowIndex, out io_CurrentMoveColumnIndex);
+            AI.PCPlay(i_GameBoard, out io_CurrentMoveRowIndex, out io_CurrentMoveColumnIndex);
             // ===================================
 
-            io_CurrentMoveRowIndex = randomedCell.Row;
-            io_CurrentMoveColumnIndex = randomedCell.Column;
+            //io_CurrentMoveRowIndex = randomedCell.Row;
+            //io_CurrentMoveColumnIndex = randomedCell.Column;
         }
 
         public int Score

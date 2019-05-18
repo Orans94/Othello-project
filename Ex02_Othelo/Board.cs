@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Ex02_Othelo
 {
-    class Board
+    public class Board
     {
         public enum eBoardSize
         { 
@@ -27,6 +27,23 @@ namespace Ex02_Othelo
                     m_Board[rowIndex, colIndex] = new Cell(rowIndex, colIndex);
                 }
             }
+        }
+
+        public Board Clone()
+        {
+            Board res = new Board(this.m_BoardSize);
+            Cell cellToCopy;
+
+            for (int i = 0; i < (int)m_BoardSize; i++)
+            {
+                for (int j = 0; j < (int)m_BoardSize; j++)
+                {
+                    cellToCopy = new Cell(i, j, m_Board[i, j].Sign);
+                    res.m_Board[i, j] = cellToCopy;
+                }
+            }
+            return res;
+             
         }
 
         public eBoardSize Size
@@ -96,6 +113,7 @@ namespace Ex02_Othelo
             }
 
             i_CellsToUpdate.Clear();
+
         }
 
         public bool IsCellEmpty(int i_RowIndex, int i_ColumnIndex)
@@ -144,5 +162,6 @@ namespace Ex02_Othelo
 
             return countOfSignAppearances;
         }
+      
     }
 }
