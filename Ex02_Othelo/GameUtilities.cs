@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Ex02_Othelo
 {
-    class GameUtilities
+    public class GameUtilities
     {
         public enum ePlayerColor
         {

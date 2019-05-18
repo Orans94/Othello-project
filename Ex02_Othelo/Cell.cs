@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Ex02_Othelo
 {
-    class Cell
+    public class Cell
     {
         public const char k_Empty = ' ';
         private char m_Sign = k_Empty;
