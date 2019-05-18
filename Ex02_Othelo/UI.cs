@@ -310,11 +310,11 @@ namespace Ex02_Othelo
 
             if(i_WinnerColor == GameUtilities.ePlayerColor.BlackPlayer)
             {
-                winnerColor = "Black player X";
+                winnerColor = "Black player";
             }
             else
             {
-                winnerColor = "White player O";
+                winnerColor = "White player";
             }
 
             winnerDeclerationMessage.AppendFormat("White player score: {1}{0}Black player score: {2}{0}The winner is: {3}!",

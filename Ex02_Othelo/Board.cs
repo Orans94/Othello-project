@@ -31,18 +31,18 @@ namespace Ex02_Othelo
 
         public Board Clone()
         {
-            Board newBoard = new Board(this.m_BoardSize);
+            Board res = new Board(this.m_BoardSize);
             Cell cellToCopy;
 
-            for (int row = 0; row < (int)m_BoardSize; row++)
+            for (int i = 0; i < (int)m_BoardSize; i++)
             {
-                for (int column = 0; column < (int)m_BoardSize; column++)
+                for (int j = 0; j < (int)m_BoardSize; j++)
                 {
-                    cellToCopy = new Cell(row, column, m_Board[row, column].Sign);
-                    newBoard.m_Board[row, column] = cellToCopy;
+                    cellToCopy = new Cell(i, j, m_Board[i, j].Sign);
+                    res.m_Board[i, j] = cellToCopy;
                 }
             }
-            return newBoard;
+            return res;
              
         }
 
