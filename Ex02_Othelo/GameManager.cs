@@ -41,8 +41,6 @@ namespace Ex02_Othelo
             int currentPlayerMoveRowIndex, currentPlayerMoveColumnIndex;
             bool isPlayerMoveLegal, isGameEnd = false;
             List<Cell> cellsToUpdate = new List<Cell>();
-            //m_BlackPlayerOptions = new List<Cell>();
-            //m_WhitePlayerOptions = new List<Cell>();
             eGameDecision rematchOrExit;
 
             configureGameSettings(whiteHumanPlayer, blackHumanPlayer, blackPCPlayer);
@@ -52,8 +50,6 @@ namespace Ex02_Othelo
                 UI.Draw(m_GameBoard, whiteHumanPlayer, blackHumanPlayer, blackPCPlayer);
                 do
                 {
-                    //UI.Draw(m_GameBoard, whiteHumanPlayer, blackHumanPlayer, blackPCPlayer); // DELETE
-
                     tellCurrentPlayerToPlay(blackHumanPlayer, whiteHumanPlayer, blackPCPlayer, m_BlackPlayerOptions,
                         out currentPlayerMoveRowIndex, out currentPlayerMoveColumnIndex);
                     if (currentPlayerMoveColumnIndex == (int)HumanPlayer.eUserRequest.Exit)
@@ -61,7 +57,6 @@ namespace Ex02_Othelo
                         isGameEnd = true;
                         break;
                     }
-                    //UI.Draw(m_GameBoard, whiteHumanPlayer, blackHumanPlayer, blackPCPlayer); // DELETE
 
                     isPlayerMoveLegal = isLegalMove(currentPlayerMoveRowIndex, currentPlayerMoveColumnIndex, ref cellsToUpdate);
                 }
@@ -78,7 +73,7 @@ namespace Ex02_Othelo
                 updatePlayersScore(whiteHumanPlayer, blackHumanPlayer, blackPCPlayer);
                 turnChangingManager();
                 isGameEnd = isGameOver();
-                //Ex02.ConsoleUtils.Screen.Clear(); // DELETE - RETURN COMMAND
+                Ex02.ConsoleUtils.Screen.Clear();
                 if (isGameEnd)
                 {
                     determineWinner();
@@ -404,27 +399,27 @@ namespace Ex02_Othelo
         {
             Cell cellIterator = null;
             bool isBlockFound;
-            int j;
+            int row;
 
             isBlockFound = isBlockingLine(i_PlayerMoveRowIndex, i_PlayerMoveColumnIndex, i_VerticalDirection, i_HorizontalDirection, out cellIterator);
             if (isBlockFound && i_AddCellsToList == true)
             {
                 if (i_HorizontalDirection == (int)eDirection.Left && i_VerticalDirection == (int)eDirection.Up)
                 {
-                    j = i_PlayerMoveRowIndex;
-                    for (int i = i_PlayerMoveColumnIndex; i > cellIterator.Column; i--)
+                    row = i_PlayerMoveRowIndex;
+                    for (int column = i_PlayerMoveColumnIndex; column > cellIterator.Column; column--)
                     {
-                        io_CellsToUpdate.Add(m_GameBoard.Matrix[j, i]);
-                        j += (int)eDirection.Up;
+                        io_CellsToUpdate.Add(m_GameBoard.Matrix[row, column]);
+                        row += (int)eDirection.Up;
                     }
                 }
                 else
                 {// elsewise we are going RIGHT and DOWN
-                    j = i_PlayerMoveRowIndex;
+                    row = i_PlayerMoveRowIndex;
                     for (int i = i_PlayerMoveColumnIndex; i < cellIterator.Column; i++)
                     {
-                        io_CellsToUpdate.Add(m_GameBoard.Matrix[j, i]);
-                        j += (int)eDirection.Down;
+                        io_CellsToUpdate.Add(m_GameBoard.Matrix[row, i]);
+                        row += (int)eDirection.Down;
                     }
                 }
             }
@@ -436,27 +431,27 @@ namespace Ex02_Othelo
         {
             Cell cellIterator = null;
             bool isBlockFound;
-            int j;
+            int row;
 
             isBlockFound = isBlockingLine(i_PlayerMoveRowIndex, i_PlayerMoveColumnIndex, i_VerticalDirection, i_HorizontalDirection, out cellIterator);
             if (isBlockFound && i_AddCellsToList == true)
             {
                 if (i_HorizontalDirection == (int)eDirection.Left && i_VerticalDirection == (int)eDirection.Down)
                 {
-                    j = i_PlayerMoveRowIndex;
-                    for (int i = i_PlayerMoveColumnIndex; i > cellIterator.Column; i--)
+                    row = i_PlayerMoveRowIndex;
+                    for (int column = i_PlayerMoveColumnIndex; column > cellIterator.Column; column--)
                     {
-                        io_CellsToUpdate.Add(m_GameBoard.Matrix[j,i]);
-                        j += (int)eDirection.Down;
+                        io_CellsToUpdate.Add(m_GameBoard.Matrix[row,column]);
+                        row += (int)eDirection.Down;
                     }
                 }
                 else
                 {// elsewise we are going UP and RIGHT
-                    j = i_PlayerMoveRowIndex;
+                    row = i_PlayerMoveRowIndex;
                     for (int i = i_PlayerMoveColumnIndex; i < cellIterator.Column; i++)
                     {
-                        io_CellsToUpdate.Add(m_GameBoard.Matrix[j,i]);
-                        j += (int)eDirection.Up;
+                        io_CellsToUpdate.Add(m_GameBoard.Matrix[row,i]);
+                        row += (int)eDirection.Up;
                     }
                 }
             }
@@ -474,16 +469,16 @@ namespace Ex02_Othelo
             {
                 if (i_HorizontalDirection == (int)eDirection.Left)
                 {
-                    for (int i = i_PlayerMoveColumnIndex; i > cellIterator.Column; i--)
+                    for (int column = i_PlayerMoveColumnIndex; column > cellIterator.Column; column--)
                     {
-                        io_CellsToUpdate.Add(m_GameBoard.Matrix[i_PlayerMoveRowIndex, i]);
+                        io_CellsToUpdate.Add(m_GameBoard.Matrix[i_PlayerMoveRowIndex, column]);
                     }
                 }
                 else
                 {
-                    for (int i = i_PlayerMoveColumnIndex; i < cellIterator.Column; i++)
+                    for (int column = i_PlayerMoveColumnIndex; column < cellIterator.Column; column++)
                     {
-                        io_CellsToUpdate.Add(m_GameBoard.Matrix[i_PlayerMoveRowIndex, i]);
+                        io_CellsToUpdate.Add(m_GameBoard.Matrix[i_PlayerMoveRowIndex, column]);
                     }
                 }
             }
@@ -545,16 +540,16 @@ namespace Ex02_Othelo
             {
                 if (i_VerticalDirection == (int)eDirection.Up)
                 {
-                    for (int i = i_PlayerMoveRowIndex; i > cellIterator.Row; i--)
+                    for (int row = i_PlayerMoveRowIndex; row > cellIterator.Row; row--)
                     {
-                        io_CellsToUpdate.Add(m_GameBoard.Matrix[i, i_PlayerMoveColumnIndex]);
+                        io_CellsToUpdate.Add(m_GameBoard.Matrix[row, i_PlayerMoveColumnIndex]);
                     }
                 }
                 else
                 {
-                    for (int i = i_PlayerMoveRowIndex; i < cellIterator.Row; i++)
+                    for (int row = i_PlayerMoveRowIndex; row < cellIterator.Row; row++)
                     {
-                        io_CellsToUpdate.Add(m_GameBoard.Matrix[i, i_PlayerMoveColumnIndex]);
+                        io_CellsToUpdate.Add(m_GameBoard.Matrix[row, i_PlayerMoveColumnIndex]);
                     }
                 }
             }
