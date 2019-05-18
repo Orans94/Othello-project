@@ -78,7 +78,7 @@ namespace Ex02_Othelo
                 updatePlayersScore(whiteHumanPlayer, blackHumanPlayer, blackPCPlayer);
                 turnChangingManager();
                 isGameEnd = isGameOver();
-                Ex02.ConsoleUtils.Screen.Clear();
+                //Ex02.ConsoleUtils.Screen.Clear(); // DELETE - RETURN COMMAND
                 if (isGameEnd)
                 {
                     determineWinner();

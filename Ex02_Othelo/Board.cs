@@ -34,16 +34,11 @@ namespace Ex02_Othelo
             Board res = new Board(this.m_BoardSize);
             Cell cellToCopy;
 
-            foreach(Cell cell in m_Board)
-            {
-
-            }
-
             for (int i = 0; i < (int)m_BoardSize; i++)
             {
                 for (int j = 0; j < (int)m_BoardSize; j++)
                 {
-                    cellToCopy = new Cell(i,j);
+                    cellToCopy = new Cell(i, j, m_Board[i, j].Sign);
                     res.m_Board[i, j] = cellToCopy;
                 }
             }

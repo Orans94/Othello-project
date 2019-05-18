@@ -11,8 +11,10 @@ namespace Ex02_Othelo
         {
             GameManager gameMangaerAI = new GameManager(i_GameBoardState, i_MaximizingPlayer);
             Board copiedBoard;
-            List<Cell> playerOptionList;
-           
+            List<Cell> playerOptionList = new List<Cell>();
+            UI.Draw(i_GameBoardState); // DELETE
+
+
             int eval, minEval, maxEval;
 
             if (i_Depth == 0 || isGameOver(i_GameBoardState, i_MaximizingPlayer))
@@ -25,13 +27,16 @@ namespace Ex02_Othelo
                 if (i_MaximizingPlayer == GameUtilities.ePlayerColor.BlackPlayer) // this is PC's turn - Choose max value
                 {
                     //playerOptionList = gameMangaerAI.BlackPlayerOptions;
-                    playerOptionList = gameMangaerAI.BlackPlayerOptions.ConvertAll(cell => new Cell(cell.Row, cell.Column));
+                   //playerOptionList = gameMangaerAI.BlackPlayerOptions.ConvertAll(cell => new Cell(cell.Row, cell.Column));
                     maxEval = int.MinValue;
                     foreach (Cell cellIteator in gameMangaerAI.BlackPlayerOptions)
                     {
                         copiedBoard = gameMangaerAI.GameBoard.Clone();
+                        //UI.Draw(copiedBoard); // DELETE
+
                         gameMangaerAI.isPlayerMoveBlockingEnemy(cellIteator.Row, cellIteator.Column, ref playerOptionList);
                         copiedBoard.UpdateBoard(playerOptionList, i_MaximizingPlayer);
+                        //UI.Draw(copiedBoard); // DELETE
                         eval = Minmax(copiedBoard, i_Depth - 1, GameUtilities.ePlayerColor.WhitePlayer,ref io_Cell);
                         if (eval > maxEval)
                         {
@@ -45,19 +50,23 @@ namespace Ex02_Othelo
                 else // this is Human player - Choose min value
                 {
                     //playerOptionList = gameMangaerAI.WhitePlayerOptions;
-                    playerOptionList = gameMangaerAI.WhitePlayerOptions.ConvertAll(cell => new Cell(cell.Row, cell.Column));
+                    //playerOptionList = gameMangaerAI.WhitePlayerOptions.ConvertAll(cell => new Cell(cell.Row, cell.Column));
 
                     minEval = int.MaxValue;
                     foreach (Cell cellIteator in gameMangaerAI.WhitePlayerOptions)
                     {
                         copiedBoard = gameMangaerAI.GameBoard.Clone();
+                        //UI.Draw(copiedBoard); // DELETE
+
                         gameMangaerAI.isPlayerMoveBlockingEnemy(cellIteator.Row, cellIteator.Column, ref playerOptionList);
                         copiedBoard.UpdateBoard(playerOptionList, i_MaximizingPlayer);
+                        //UI.Draw(copiedBoard); // DELETE
+
                         eval = Minmax(copiedBoard, i_Depth - 1, GameUtilities.ePlayerColor.BlackPlayer, ref io_Cell);
                         if (eval < minEval)
                         {
-                            io_Cell.Row = cellIteator.Row;
-                            io_Cell.Column = cellIteator.Column;
+                           // io_Cell.Row = cellIteator.Row;
+                            //io_Cell.Column = cellIteator.Column;
                             minEval = eval;
                         }
                     }
@@ -99,7 +108,7 @@ namespace Ex02_Othelo
             int minmaxOutput;
             Cell chosenCell = new Cell();
 
-            minmaxOutput = Minmax(i_GameBoard, 5, GameUtilities.ePlayerColor.BlackPlayer, ref chosenCell);
+            minmaxOutput = Minmax(i_GameBoard, 3, GameUtilities.ePlayerColor.BlackPlayer, ref chosenCell);
 
             io_CurrentMoveRowIndex = chosenCell.Row;
             io_CurrentMoveColumnIndex = chosenCell.Column;
