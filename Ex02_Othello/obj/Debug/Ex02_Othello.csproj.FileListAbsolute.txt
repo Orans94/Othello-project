@@ -1,0 +1,16 @@
+C:\Users\orans\source\repos\Ex02_Othelo\Ex02_Othelo\bin\Debug\Ex02_Othelo.exe
+C:\Users\orans\source\repos\Ex02_Othelo\Ex02_Othelo\bin\Debug\Ex02_Othelo.pdb
+C:\Users\orans\source\repos\Ex02_Othelo\Ex02_Othelo\bin\Debug\Ex02.ConsoleUtils.dll
+C:\Users\orans\source\repos\Ex02_Othelo\Ex02_Othelo\obj\Debug\Ex02_Othello.csprojAssemblyReference.cache
+C:\Users\orans\source\repos\Ex02_Othelo\Ex02_Othelo\obj\Debug\Ex02_Othello.csproj.CoreCompileInputs.cache
+C:\Users\orans\source\repos\Ex02_Othelo\Ex02_Othelo\obj\Debug\Ex02_Othello.csproj.CopyComplete
+C:\Users\orans\source\repos\Ex02_Othelo\Ex02_Othelo\obj\Debug\Ex02_Othelo.exe
+C:\Users\orans\source\repos\Ex02_Othelo\Ex02_Othelo\obj\Debug\Ex02_Othelo.pdb
+C:\Users\orans\source\repos\Ex02_Othello\Ex02_Othello\bin\Debug\Ex02_Othello.exe
+C:\Users\orans\source\repos\Ex02_Othello\Ex02_Othello\bin\Debug\Ex02_Othello.pdb
+C:\Users\orans\source\repos\Ex02_Othello\Ex02_Othello\bin\Debug\Ex02.ConsoleUtils.dll
+C:\Users\orans\source\repos\Ex02_Othello\Ex02_Othello\obj\Debug\Ex02_Othello.csprojAssemblyReference.cache
+C:\Users\orans\source\repos\Ex02_Othello\Ex02_Othello\obj\Debug\Ex02_Othello.csproj.CoreCompileInputs.cache
+C:\Users\orans\source\repos\Ex02_Othello\Ex02_Othello\obj\Debug\Ex02_Othello.csproj.CopyComplete
+C:\Users\orans\source\repos\Ex02_Othello\Ex02_Othello\obj\Debug\Ex02_Othello.exe
+C:\Users\orans\source\repos\Ex02_Othello\Ex02_Othello\obj\Debug\Ex02_Othello.pdb
