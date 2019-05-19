@@ -20,13 +20,13 @@ namespace Ex02_Othelo
 
         public Cell()
         {
-            
         }
         
         public int Row
         {
             get
             {
+
                 return m_Row;
             }
 
@@ -40,6 +40,7 @@ namespace Ex02_Othelo
         {
             get
             {
+
                 return m_Column;
             }
 
@@ -53,6 +54,7 @@ namespace Ex02_Othelo
         {
             get
             {
+
                 return m_Sign;
             }
 
@@ -65,6 +67,7 @@ namespace Ex02_Othelo
         public bool IsEmpty()
         {
             bool isCellEmpty;
+
             if(m_Sign == k_Empty)
             {
                 isCellEmpty = true;

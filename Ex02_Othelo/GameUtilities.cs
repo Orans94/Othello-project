@@ -10,6 +10,6 @@ namespace Ex02_Othelo
         {
             BlackPlayer = 'X',
             WhitePlayer = 'O'
-        };
+        }
     }
 }

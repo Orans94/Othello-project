@@ -6,13 +6,11 @@ using System.Text;
 // The white player marked as 'O'
 // When the game mode is human vs pc than the black player will be the PC and the white player will be the human.
 
-//IMPROVEMENTS:
-//1. make rowindex and columnindex as one package
-
-
+// IMPROVEMENTS:
+// 1. make rowindex and columnindex as one package
 namespace Ex02_Othelo
 {
-    class Program
+    public class Program
     {
         public static void Main(string[] args)
         {

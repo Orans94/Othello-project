@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+
 namespace Ex02_Othelo
 {
     public class GameManager
@@ -34,7 +35,7 @@ namespace Ex02_Othelo
 
         public void Run()
         {
-            //this method maintains the main loop of the game.
+            // this method maintains the main loop of the game.
             HumanPlayer whiteHumanPlayer = new HumanPlayer(GameUtilities.ePlayerColor.WhitePlayer);
             HumanPlayer blackHumanPlayer = new HumanPlayer(GameUtilities.ePlayerColor.BlackPlayer);
             PcPlayer blackPCPlayer = new PcPlayer();
@@ -64,7 +65,7 @@ namespace Ex02_Othelo
 
                 if (isGameEnd)
                 {
-                    //the user chose to exit the game.
+                    // the user chose to exit the game.
                     break;
                 }
 
@@ -89,19 +90,21 @@ namespace Ex02_Othelo
                     }
                 }
             }
+
             UI.ShowExitMessage();
             System.Threading.Thread.Sleep(5000);
         }
-        public GameManager (Board i_GameBoard, GameUtilities.ePlayerColor i_PlayerTurn)
+
+        public GameManager(Board i_GameBoard, GameUtilities.ePlayerColor i_PlayerTurn)
         {
             Board copiedBoard = i_GameBoard;
             m_GameBoard = copiedBoard;
             m_PlayerTurn = i_PlayerTurn;
         }
+
         public GameManager()
         {
         }
-
 
         private void updatePlayersScore(HumanPlayer i_WhiteHumanPlayer, HumanPlayer i_BlackHumanPlayer, PcPlayer i_BlackPCPlayer)
         {
@@ -176,8 +179,8 @@ namespace Ex02_Othelo
         private void tellCurrentPlayerToPlay(HumanPlayer i_BlackHumanPlayer, HumanPlayer i_WhiteHumanPlayer, PcPlayer i_BlackPcPlayer, List<Cell> i_BlackPcPlayerOptions,
             out int io_CurrentMoveRowIndex, out int io_CurrentMoveColumnIndex)
         {
-            //this method recieves the players, and the pcplayer options, checks who should play now and tell them to play.
-            //the method will keep asking for legal input as long as it is not logicaly legal. 
+            // this method recieves the players, and the pcplayer options, checks who should play now and tell them to play.
+            // the method will keep asking for legal input as long as it is not logicaly legal. 
             if (m_GameMode == eGameMode.HumanVsHuman)
             {
                 if (m_PlayerTurn == GameUtilities.ePlayerColor.BlackPlayer)
@@ -200,7 +203,6 @@ namespace Ex02_Othelo
                     i_WhiteHumanPlayer.Play(m_GameBoard.Size, out io_CurrentMoveRowIndex, out io_CurrentMoveColumnIndex);
                 }
             }
-
         }
 
         public Board GameBoard
@@ -211,10 +213,6 @@ namespace Ex02_Othelo
 
                 return m_GameBoard;
             }
-            //set
-            //{
-            //    m_GameBoard = new Board(value);
-            //}
         }
 
         public List<Cell> BlackPlayerOptions
@@ -241,12 +239,9 @@ namespace Ex02_Othelo
             GameUtilities.ePlayerColor lastPlayerTurn;
             bool isCellAnOption, shouldMethodAddCellsToUpdateList;
 
-            // clear players options lists
             m_WhitePlayerOptions.Clear();
             m_BlackPlayerOptions.Clear();
-            // saving the last player's turn
             lastPlayerTurn = m_PlayerTurn;
-            //this method is updating the players options.
             shouldMethodAddCellsToUpdateList = false;
             foreach (Cell cellIteator in m_GameBoard.Matrix)
             {
@@ -276,7 +271,7 @@ namespace Ex02_Othelo
 
         public GameUtilities.ePlayerColor Turn
         {
-            //a propertie for m_PlayerTurn
+            // a propertie for m_PlayerTurn
             get
             {
 
@@ -291,10 +286,10 @@ namespace Ex02_Othelo
 
         private bool isLegalMove(int i_PlayerMoveRowIndex, int i_PlayerMoveColumnIndex, ref List<Cell> io_CellsToUpdate)
         {
-            //this method recieves a player move and return true if the move is legal, false otherwise.
+            // this method recieves a player move and return true if the move is legal, false otherwise.
             bool isPlayerMoveLegal, isCellEmpty, isMoveBlockingEnemy, isPlayerMoveAnOption;
 
-            isPlayerMoveAnOption = isMoveInOptionsList(m_GameBoard.Matrix[i_PlayerMoveRowIndex,i_PlayerMoveColumnIndex]);
+            isPlayerMoveAnOption = isMoveInOptionsList(m_GameBoard.Matrix[i_PlayerMoveRowIndex, i_PlayerMoveColumnIndex]);
             if (isPlayerMoveAnOption)
             {
                 isCellEmpty = m_GameBoard.IsCellEmpty(i_PlayerMoveRowIndex, i_PlayerMoveColumnIndex);
@@ -353,8 +348,8 @@ namespace Ex02_Othelo
 
         public bool isPlayerMoveBlockingEnemy(int i_PlayerMoveRowIndex, int i_PlayerMoveColumnIndex, ref List<Cell> io_CellsToUpdate, bool i_AddCellsToList = true)
         {
-            //this method recieves a player move and return true if the move is blocking the enemy.
-            //its also updates the list of cells to update.
+            // this method recieves a player move and return true if the move is blocking the enemy.
+            // its also updates the list of cells to update.
             bool isVerticalBlocking, isHorizontalBlocking, isDiagonalOneBlocking, isDiagonalTwoBlocking, isMoveBlockingEnemy;
 
             isVerticalBlocking = isVerticallyBlocking(i_PlayerMoveRowIndex, i_PlayerMoveColumnIndex, ref io_CellsToUpdate, (int)eDirection.Up, (int)eDirection.NoDirection, i_AddCellsToList);
@@ -414,7 +409,8 @@ namespace Ex02_Othelo
                     }
                 }
                 else
-                {// elsewise we are going RIGHT and DOWN
+                {
+                    // elsewise we are going RIGHT and DOWN
                     row = i_PlayerMoveRowIndex;
                     for (int i = i_PlayerMoveColumnIndex; i < cellIterator.Column; i++)
                     {
@@ -441,16 +437,17 @@ namespace Ex02_Othelo
                     row = i_PlayerMoveRowIndex;
                     for (int column = i_PlayerMoveColumnIndex; column > cellIterator.Column; column--)
                     {
-                        io_CellsToUpdate.Add(m_GameBoard.Matrix[row,column]);
+                        io_CellsToUpdate.Add(m_GameBoard.Matrix[row, column]);
                         row += (int)eDirection.Down;
                     }
                 }
                 else
-                {// elsewise we are going UP and RIGHT
+                {
+                    // elsewise we are going UP and RIGHT
                     row = i_PlayerMoveRowIndex;
                     for (int i = i_PlayerMoveColumnIndex; i < cellIterator.Column; i++)
                     {
-                        io_CellsToUpdate.Add(m_GameBoard.Matrix[row,i]);
+                        io_CellsToUpdate.Add(m_GameBoard.Matrix[row, i]);
                         row += (int)eDirection.Up;
                     }
                 }
@@ -501,13 +498,13 @@ namespace Ex02_Othelo
                 isCellEnemy = isCellAnEnemy(i_CellIterator, Turn);
             }
 
-            if (isInBoardLimits && isCellEnemy) // this condition check if the first cell is an enemy and in board, if it is countiue
+            if (isInBoardLimits && isCellEnemy) 
             {
+                // this condition check if the first cell is an enemy and in board, if it is countiue
                 do
                 {
                     i_CellIterator.Row += i_VerticalDirection;
                     i_CellIterator.Column += i_HorizontalDirection;
-                    //i_CellIterator.Sign = GameBoard.Matrix[i_CellIterator.Row, i_CellIterator.Column].Sign;
                     isInBoardLimits = m_GameBoard.IsCellInBoard(i_CellIterator);
                     if (isInBoardLimits)
                     {
@@ -516,6 +513,7 @@ namespace Ex02_Othelo
                     }
                 }
                 while (isInBoardLimits && isCellEnemy);
+
                 // check why the while has been stopped
                 if (isInBoardLimits)
                 {
@@ -568,7 +566,7 @@ namespace Ex02_Othelo
 
         private bool isPlayerOptionEmpty(GameUtilities.ePlayerColor i_PlayerColor)
         {
-            //this method recieve a PlayerColor and check if his options list is empty.
+            // this method recieve a PlayerColor and check if his options list is empty.
             bool isOptionListEmpty;
 
             if (i_PlayerColor == GameUtilities.ePlayerColor.BlackPlayer)
@@ -577,7 +575,7 @@ namespace Ex02_Othelo
             }
             else
             {
-                //if not black player - than its a white player.
+                // if not black player - than its a white player.
                 isOptionListEmpty = m_WhitePlayerOptions.Count == 0;
             }
 
@@ -586,7 +584,7 @@ namespace Ex02_Othelo
 
         private bool isGameOver()
         {
-            //this method checks if the game is over(if both of the players has no options to play).
+            // this method checks if the game is over(if both of the players has no options to play).
             bool doesBothPlayersHasNoOptions;
 
             doesBothPlayersHasNoOptions = isPlayerOptionEmpty(GameUtilities.ePlayerColor.BlackPlayer) && isPlayerOptionEmpty(GameUtilities.ePlayerColor.WhitePlayer);
@@ -596,7 +594,7 @@ namespace Ex02_Othelo
 
         public eGameMode Mode
         {
-            //a propertie for m_GameMode
+            // a propertie for m_GameMode
             get
             {
 
@@ -706,13 +704,13 @@ namespace Ex02_Othelo
 
         private void restartGame(HumanPlayer i_WhiteHumanPlayer, HumanPlayer i_BlackHumanPlayer, PcPlayer i_BlackPCPlayer)
         {
-            //this method restarts a game.
+            // this method restarts a game.
             initialize(i_WhiteHumanPlayer, i_BlackHumanPlayer, i_BlackPCPlayer);
         }
 
         private void exitGame()
         {
-            //this method exiting the game and calls the ui to show the exit message.
+            // this method exiting the game and calls the ui to show the exit message.
             UI.ShowExitMessage();
         }
     }

@@ -6,12 +6,10 @@ namespace Ex02_Othelo
 {
     public class AI
     {
-
-        public static int Minimax(Board i_GameBoardState, int i_Depth, GameUtilities.ePlayerColor i_MaximizingPlayer, ref Cell io_Cell,ref List<KeyValuePair<int, List<Cell>>> i_ListOfKeyValue) 
+        public static int Minimax(Board i_GameBoardState, int i_Depth, GameUtilities.ePlayerColor i_MaximizingPlayer, ref Cell io_Cell, ref List<KeyValuePair<int, List<Cell>>> i_ListOfKeyValue) 
         {
             // this method return a List of pairs < heuristic score , list of cells that lead to this score >
             // using Minimax algorithm, it return that list of pair I described by ref 
-
             GameManager gameMangaerAI = new GameManager(i_GameBoardState, i_MaximizingPlayer);
             List<Cell> playerOptionList = new List<Cell>();
             List<Cell> playerMovesList = new List<Cell>();
@@ -26,29 +24,32 @@ namespace Ex02_Othelo
             else
             {
                 gameMangaerAI.updatePlayersOptions();
-                if (i_MaximizingPlayer == GameUtilities.ePlayerColor.BlackPlayer) // this is PC's turn - Choose max value
+                if (i_MaximizingPlayer == GameUtilities.ePlayerColor.BlackPlayer) 
                 {
+                    // this is PC's turn - Choose max value
                     maxEval = int.MinValue;
                     foreach (Cell cellIteator in gameMangaerAI.BlackPlayerOptions)
                     {
                         copiedBoard = gameMangaerAI.GameBoard.Clone();
                         gameMangaerAI.isPlayerMoveBlockingEnemy(cellIteator.Row, cellIteator.Column, ref playerOptionList);
                         copiedBoard.UpdateBoard(playerOptionList, i_MaximizingPlayer);
-                        eval = Minimax(copiedBoard, i_Depth - 1, GameUtilities.ePlayerColor.WhitePlayer,ref io_Cell, ref i_ListOfKeyValue);
+                        eval = Minimax(copiedBoard, i_Depth - 1, GameUtilities.ePlayerColor.WhitePlayer, ref io_Cell, ref i_ListOfKeyValue);
                         if (eval > maxEval)
                         {
                             playerMovesList.Add(io_Cell);
-                            scoreAndCellsListPair = new KeyValuePair<int, List<Cell>>(eval,playerMovesList);
+                            scoreAndCellsListPair = new KeyValuePair<int, List<Cell>>(eval, playerMovesList);
                             i_ListOfKeyValue.Add(scoreAndCellsListPair);
                             io_Cell.Row = cellIteator.Row;
-                            io_Cell.Column= cellIteator.Column;                           
+                            io_Cell.Column = cellIteator.Column;                 
                             maxEval = eval;
                         }
                     }
+
                     return maxEval;
                 }
-                else // this is Human player - Choose min value
+                else 
                 {
+                // this is Human player - Choose min value
                     minEval = int.MaxValue;
                     foreach (Cell cellIteator in gameMangaerAI.WhitePlayerOptions)
                     {
@@ -64,6 +65,7 @@ namespace Ex02_Othelo
                             minEval = eval;
                         }
                     }
+
                     return minEval;
                 }
             }
@@ -83,7 +85,7 @@ namespace Ex02_Othelo
 
         private static bool isGameOver(Board i_GameBoardState, GameUtilities.ePlayerColor i_MaximizingPlayer)
         {
-            //this method passing all cell in the list and check if their is an option for maximizingPlayer
+            // this method passing all cell in the list and check if their is an option for maximizingPlayer
             GameManager gm = new GameManager(i_GameBoardState, i_MaximizingPlayer);
             List<Cell> cellLists = new List<Cell>();
             bool addToCellsList = false;
@@ -94,6 +96,7 @@ namespace Ex02_Othelo
                     return false;
                 }
             }
+
             return true;
         }
 
@@ -112,10 +115,10 @@ namespace Ex02_Othelo
 
             // choose the best score from the listOfScoreAndMoveList (the best located in the last index) and pick up the first Cell => will be PC chose
             // that lead to this best score.
-            io_CurrentMoveRowIndex = listOfScoreAndMoveList[listOfScoreAndMoveList.Count-1].Value[0].Row;
-            io_CurrentMoveColumnIndex = listOfScoreAndMoveList[listOfScoreAndMoveList.Count-1].Value[0].Column;
-
+            io_CurrentMoveRowIndex = listOfScoreAndMoveList[listOfScoreAndMoveList.Count - 1].Value[0].Row;
+            io_CurrentMoveColumnIndex = listOfScoreAndMoveList[listOfScoreAndMoveList.Count - 1].Value[0].Column;
         }
+
         private static int getCornersHeuristic(Board i_Board, char i_Sign)
         {
             int result, edgesOfBoard;
@@ -141,7 +144,7 @@ namespace Ex02_Othelo
             return result;
         }
 
-        private static int heuristic( Board i_Board, GameUtilities.ePlayerColor i_playerTurn)
+        private static int heuristic(Board i_Board, GameUtilities.ePlayerColor i_playerTurn)
         {
             // heuristic method for Minimax algorithm
             int heuristicResult;
