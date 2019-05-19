@@ -76,8 +76,8 @@ namespace Ex02_Othelo
             // this method calculate the difference between the PC player score and the human score and return it
             int whiteCharsInBoard, blackCharsInBoard, difference;
 
-            whiteCharsInBoard = i_GameBoardState.CountSignAppearances('O');
-            blackCharsInBoard = i_GameBoardState.CountSignAppearances('X');
+            whiteCharsInBoard = i_GameBoardState.CountSignAppearances((char)GameUtilities.ePlayerColor.WhitePlayer);
+            blackCharsInBoard = i_GameBoardState.CountSignAppearances((char)GameUtilities.ePlayerColor.BlackPlayer);
             difference = blackCharsInBoard - whiteCharsInBoard;
 
             return difference;
@@ -86,21 +86,27 @@ namespace Ex02_Othelo
         private static bool isGameOver(Board i_GameBoardState, GameUtilities.ePlayerColor i_MaximizingPlayer)
         {
             // this method passing all cell in the list and check if their is an option for maximizingPlayer
-            GameManager gm = new GameManager(i_GameBoardState, i_MaximizingPlayer);
+            GameManager tempGameManager = new GameManager(i_GameBoardState, i_MaximizingPlayer);
             List<Cell> cellLists = new List<Cell>();
-            bool addToCellsList = false;
+            bool addToCellsList, isCellAnOption, currentGameNotOver;
+
+            addToCellsList = false;
+            currentGameNotOver = false;
             foreach (Cell cellIteator in i_GameBoardState.Matrix)
             {
-                if (gm.isPlayerMoveBlockingEnemy(cellIteator.Row, cellIteator.Column, ref cellLists, addToCellsList))
+                isCellAnOption = tempGameManager.isPlayerMoveBlockingEnemy(cellIteator.Row, cellIteator.Column, ref cellLists, addToCellsList);
+                if (isCellAnOption)
                 {
-                    return false;
+                    return currentGameNotOver;
                 }
             }
 
-            return true;
+            currentGameNotOver = true;
+
+            return currentGameNotOver;
         }
 
-        internal static void PCPlay(Board i_GameBoard, out int io_CurrentMoveRowIndex, out int io_CurrentMoveColumnIndex)
+        public static void PCPlay(Board i_GameBoard, out int io_CurrentMoveRowIndex, out int io_CurrentMoveColumnIndex)
         {
             // this method choosing appropriate move using Minimax algorithm. 
             int minmaxOutput;
@@ -121,6 +127,7 @@ namespace Ex02_Othelo
 
         private static int getCornersHeuristic(Board i_Board, char i_Sign)
         {
+            // this method return a score according to AI computing.
             int result, edgesOfBoard;
 
             edgesOfBoard = (int)i_Board.Size - 1;
@@ -153,7 +160,7 @@ namespace Ex02_Othelo
 
             heuristicResult = 0;
             differencePCHuman = differencePCScoreHumanScore(i_Board);
-            playerTurnSign = i_playerTurn == GameUtilities.ePlayerColor.BlackPlayer ? 'X' : 'O';
+            playerTurnSign = i_playerTurn == GameUtilities.ePlayerColor.BlackPlayer ? (char)GameUtilities.ePlayerColor.BlackPlayer : (char)GameUtilities.ePlayerColor.WhitePlayer;
             heuristicResult += getCornersHeuristic(i_Board, playerTurnSign);
             return heuristicResult + differencePCHuman;
         }

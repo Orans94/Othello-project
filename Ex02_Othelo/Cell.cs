@@ -13,6 +13,7 @@ namespace Ex02_Othelo
 
         public Cell(int i_Row, int i_Column, char i_Sign = k_Empty)
         {
+            // cell c'tor
             m_Row = i_Row;
             m_Column = i_Column;
             m_Sign = i_Sign;
@@ -20,10 +21,12 @@ namespace Ex02_Othelo
 
         public Cell()
         {
+            // default cell c'tor
         }
         
         public int Row
         {
+            // a propertie for m_Row
             get
             {
 
@@ -38,6 +41,7 @@ namespace Ex02_Othelo
 
         public int Column
         {
+            // a propertie for m_Column
             get
             {
 
@@ -52,6 +56,7 @@ namespace Ex02_Othelo
 
         public char Sign
         {
+            // a propertie for m_Sign
             get
             {
 
@@ -66,6 +71,7 @@ namespace Ex02_Othelo
 
         public bool IsEmpty()
         {
+            // this method checks if a cell is empty
             bool isCellEmpty;
 
             if(m_Sign == k_Empty)

@@ -60,6 +60,10 @@ namespace Ex02_Othelo
                     }
 
                     isPlayerMoveLegal = isLegalMove(currentPlayerMoveRowIndex, currentPlayerMoveColumnIndex, ref cellsToUpdate);
+                    if (!isPlayerMoveLegal)
+                    {
+                        UI.InformPlayerItMoveIsntAnOption(m_PlayerTurn);
+                    }
                 }
                 while (!isPlayerMoveLegal);
 
@@ -108,10 +112,11 @@ namespace Ex02_Othelo
 
         private void updatePlayersScore(HumanPlayer i_WhiteHumanPlayer, HumanPlayer i_BlackHumanPlayer, PcPlayer i_BlackPCPlayer)
         {
+            // this method is updating the players scores.
             int updatedWhitePlayerScore, updatedBlackPlayerScore;
 
-            updatedWhitePlayerScore = m_GameBoard.CountSignAppearances('O');
-            updatedBlackPlayerScore = m_GameBoard.CountSignAppearances('X');
+            updatedWhitePlayerScore = m_GameBoard.CountSignAppearances((char)GameUtilities.ePlayerColor.WhitePlayer);
+            updatedBlackPlayerScore = m_GameBoard.CountSignAppearances((char)GameUtilities.ePlayerColor.BlackPlayer);
             i_WhiteHumanPlayer.Score = updatedWhitePlayerScore;
             if (i_BlackHumanPlayer.Active)
             {
@@ -125,6 +130,7 @@ namespace Ex02_Othelo
 
         public void configureGameSettings(HumanPlayer i_WhiteHumanPlayer, HumanPlayer i_BlackHumanPlayer, PcPlayer i_BlackPCPlayer)
         {
+            // this method is configuring thte game settings
             string whitePlayerName, blackPlayerName;
             GameManager.eGameMode userGameModeChoice;
             Board.eBoardSize userBoardSizeChoice;
@@ -151,6 +157,7 @@ namespace Ex02_Othelo
 
         private void initialize(HumanPlayer i_WhiteHumanPlayer, HumanPlayer i_BlackHumanPlayer, PcPlayer i_BlackPCPlayer)
         {
+            // this method is initializing the player options, scores and board.
             m_GameBoard.Initialize();
             initializePlayersOptions();
             initializePlayersScores(i_WhiteHumanPlayer, i_BlackHumanPlayer, i_BlackPCPlayer);
@@ -159,6 +166,7 @@ namespace Ex02_Othelo
 
         private void initializePlayersScores(HumanPlayer i_WhiteHumanPlayer, HumanPlayer i_BlackHumanPlayer, PcPlayer i_BlackPCPlayer)
         {
+            // this method is initializing the players scores
             i_WhiteHumanPlayer.Score = 2;
             i_BlackHumanPlayer.Score = 2;
             i_BlackPCPlayer.Score = 2;
@@ -166,18 +174,24 @@ namespace Ex02_Othelo
 
         private void turnChangingManager()
         {
-            if (m_PlayerTurn == GameUtilities.ePlayerColor.BlackPlayer && WhitePlayerOptions.Count > 0)
+            // this method is managing the players turn changing
+            if (m_PlayerTurn == GameUtilities.ePlayerColor.BlackPlayer && m_WhitePlayerOptions.Count > 0)
             {
                 m_PlayerTurn = GameUtilities.ePlayerColor.WhitePlayer;
             }
-            else if (m_PlayerTurn == GameUtilities.ePlayerColor.WhitePlayer && BlackPlayerOptions.Count > 0)
+            else if (m_PlayerTurn == GameUtilities.ePlayerColor.WhitePlayer && m_BlackPlayerOptions.Count > 0)
             {
                 m_PlayerTurn = GameUtilities.ePlayerColor.BlackPlayer;
             }
+            else if((m_PlayerTurn == GameUtilities.ePlayerColor.BlackPlayer && m_WhitePlayerOptions.Count == 0)
+                 || (m_PlayerTurn == GameUtilities.ePlayerColor.WhitePlayer && m_BlackPlayerOptions.Count == 0))
+            {
+                UI.InformTurnHasBeenChanged(m_PlayerTurn);
+            }
         }
 
-        private void tellCurrentPlayerToPlay(HumanPlayer i_BlackHumanPlayer, HumanPlayer i_WhiteHumanPlayer, PcPlayer i_BlackPcPlayer, List<Cell> i_BlackPcPlayerOptions,
-            out int io_CurrentMoveRowIndex, out int io_CurrentMoveColumnIndex)
+        private void tellCurrentPlayerToPlay(HumanPlayer i_BlackHumanPlayer, HumanPlayer i_WhiteHumanPlayer,
+            PcPlayer i_BlackPcPlayer, List<Cell> i_BlackPcPlayerOptions, out int io_CurrentMoveRowIndex, out int io_CurrentMoveColumnIndex)
         {
             // this method recieves the players, and the pcplayer options, checks who should play now and tell them to play.
             // the method will keep asking for legal input as long as it is not logicaly legal. 
@@ -217,6 +231,7 @@ namespace Ex02_Othelo
 
         public List<Cell> BlackPlayerOptions
         {
+            // a propertie for m_BlackPlayerOptions
             get
             {
 
@@ -226,6 +241,7 @@ namespace Ex02_Othelo
 
         public List<Cell> WhitePlayerOptions
         {
+            // a propertie for m_WhitePlayerOptions
             get
             {
 
@@ -235,6 +251,7 @@ namespace Ex02_Othelo
 
         public void updatePlayersOptions()
         {
+            // this method is updating the Lists of the players options
             List<Cell> cellList = new List<Cell>();
             GameUtilities.ePlayerColor lastPlayerTurn;
             bool isCellAnOption, shouldMethodAddCellsToUpdateList;
@@ -253,14 +270,12 @@ namespace Ex02_Othelo
                     {
                         m_WhitePlayerOptions.Add(cellIteator);
                     }
-                    else
+
+                    m_PlayerTurn = GameUtilities.ePlayerColor.BlackPlayer;
+                    isCellAnOption = isPlayerMoveBlockingEnemy(cellIteator.Row, cellIteator.Column, ref cellList, shouldMethodAddCellsToUpdateList);
+                    if (isCellAnOption)
                     {
-                        m_PlayerTurn = GameUtilities.ePlayerColor.BlackPlayer;
-                        isCellAnOption = isPlayerMoveBlockingEnemy(cellIteator.Row, cellIteator.Column, ref cellList, false);
-                        if (isCellAnOption)
-                        {
-                            m_BlackPlayerOptions.Add(cellIteator);
-                        }
+                        m_BlackPlayerOptions.Add(cellIteator);
                     }
                 }
             }
@@ -306,6 +321,8 @@ namespace Ex02_Othelo
 
         private bool isMoveInOptionsList(Cell i_CellToSearchForInOptionsList)
         {
+            // this method recieves a cell and checks if its on the players options lists.
+            // if it is, it returns true. else otherwise
             bool isCellFoundInOptionsList, areCellsEqual;
 
             isCellFoundInOptionsList = false;
@@ -339,6 +356,7 @@ namespace Ex02_Othelo
 
         private bool areTwoCellsEquals(Cell i_FirstCell, Cell i_SecondCell)
         {
+            // this method recieved two cells and return true if they are equal(by row and column).
             bool areCellsEqual;
 
             areCellsEqual = i_FirstCell.Row == i_SecondCell.Row && i_FirstCell.Column == i_SecondCell.Column;
@@ -367,6 +385,8 @@ namespace Ex02_Othelo
 
         private bool isBlockingLine(int i_PlayerMoveRowIndex, int i_PlayerMoveColumnIndex, int i_VerticalDirection, int i_HorizontalDirection, out Cell o_CellIterator)
         {
+            // this method return true if there is a sequence of legal blocking.
+            // in addition, it return the last cell in the sequence as an out parameter.
             int currentRow, currentColumn;
             Cell cellIterator;
             bool isBlockFound, isInBoardLimits;
@@ -392,6 +412,8 @@ namespace Ex02_Othelo
 
         private bool isDiagonallyTwoBlocking(int i_PlayerMoveRowIndex, int i_PlayerMoveColumnIndex, ref List<Cell> io_CellsToUpdate, int i_VerticalDirection, int i_HorizontalDirection, bool i_AddCellsToList)
         {
+            // this method return true if a blocking sequence has been found in diagonal direction.
+            // **(Diagonal two is going down by Y).
             Cell cellIterator = null;
             bool isBlockFound;
             int row;
@@ -425,6 +447,8 @@ namespace Ex02_Othelo
 
         private bool isDiagonallyOneBlocking(int i_PlayerMoveRowIndex, int i_PlayerMoveColumnIndex, ref List<Cell> io_CellsToUpdate, int i_VerticalDirection, int i_HorizontalDirection, bool i_AddCellsToList)
         {
+            // this method return true if a blocking sequence has been found in diagonal direction.
+            // **(Diagonal one is going up by Y).
             Cell cellIterator = null;
             bool isBlockFound;
             int row;
@@ -458,6 +482,7 @@ namespace Ex02_Othelo
 
         private bool isHorizontallyBlocking(int i_PlayerMoveRowIndex, int i_PlayerMoveColumnIndex, ref List<Cell> io_CellsToUpdate, int i_VerticalDirection, int i_HorizontalDirection, bool i_AddCellsToList)
         {
+            // this method return true if a blocking sequence has been found in horizontal direction.
             Cell cellIterator = null;
             bool isBlockFound;
 
@@ -530,6 +555,7 @@ namespace Ex02_Othelo
 
         private bool isVerticallyBlocking(int i_PlayerMoveRowIndex, int i_PlayerMoveColumnIndex, ref List<Cell> io_CellsToUpdate, int i_VerticalDirection, int i_HorizontalDirection, bool i_AddCellsToList)
         {
+            // this method return true if a blocking sequence has been found in vertical direction.
             Cell cellIterator = null;
             bool isBlockFound;
 
@@ -557,9 +583,10 @@ namespace Ex02_Othelo
 
         private bool isCellAnEnemy(Cell i_CellIterator, GameUtilities.ePlayerColor i_CurrentPlayerTurn)
         {
+            // this method return true if the sign of the input cell is different from i_CurrentPlayerTurn
             bool isCellEnemy;
 
-            isCellEnemy = i_CellIterator.Sign != (char)i_CurrentPlayerTurn && i_CellIterator.Sign != ' ';
+            isCellEnemy = i_CellIterator.Sign != (char)i_CurrentPlayerTurn && i_CellIterator.Sign != Cell.k_Empty;
 
             return isCellEnemy;
         }
@@ -609,11 +636,12 @@ namespace Ex02_Othelo
 
         private void determineWinner()
         {
+            // this method checks who is the winner of the game and tell the ui to declare winner.
             int whitePlayerScore, blackPlayerScore;
             GameUtilities.ePlayerColor winner;
 
-            whitePlayerScore = m_GameBoard.CountSignAppearances('O');
-            blackPlayerScore = m_GameBoard.CountSignAppearances('X');
+            whitePlayerScore = m_GameBoard.CountSignAppearances((char)GameUtilities.ePlayerColor.WhitePlayer);
+            blackPlayerScore = m_GameBoard.CountSignAppearances((char)GameUtilities.ePlayerColor.BlackPlayer);
             if (whitePlayerScore > blackPlayerScore)
             {
                 winner = GameUtilities.ePlayerColor.WhitePlayer;
@@ -632,6 +660,7 @@ namespace Ex02_Othelo
 
         private void initializePlayersOptions()
         {
+            // this method is initializing the player options lists.
             if (m_BlackPlayerOptions.Count != 0)
             {
                 m_BlackPlayerOptions.Clear();
@@ -648,6 +677,7 @@ namespace Ex02_Othelo
 
         private void initializeBlackPlayerOptions()
         {
+            // this method is initializing the black player options list
             Cell cellToBeAddedToOptions1;
             Cell cellToBeAddedToOptions2;
             Cell cellToBeAddedToOptions3;
@@ -676,6 +706,7 @@ namespace Ex02_Othelo
 
         private void initializeWhitePlayerOptions()
         {
+            // this method is initializing the white player options list
             Cell cellToBeAddedToOptions1;
             Cell cellToBeAddedToOptions2;
             Cell cellToBeAddedToOptions3;
@@ -710,7 +741,7 @@ namespace Ex02_Othelo
 
         private void exitGame()
         {
-            // this method exiting the game and calls the ui to show the exit message.
+            // this method calls the ui to show the exit message.
             UI.ShowExitMessage();
         }
     }

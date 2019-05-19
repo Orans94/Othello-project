@@ -81,17 +81,17 @@ namespace Ex02_Othelo
             clear();
             if (Size == eBoardSize.bigBoard)
             {
-                m_Board[3, 3].Sign = 'O';
-                m_Board[4, 3].Sign = 'X';
-                m_Board[4, 4].Sign = 'O';
-                m_Board[3, 4].Sign = 'X';
+                m_Board[3, 3].Sign = (char)GameUtilities.ePlayerColor.WhitePlayer;
+                m_Board[4, 3].Sign = (char)GameUtilities.ePlayerColor.BlackPlayer;
+                m_Board[4, 4].Sign = (char)GameUtilities.ePlayerColor.WhitePlayer;
+                m_Board[3, 4].Sign = (char)GameUtilities.ePlayerColor.BlackPlayer;
             }
             else if (Size == eBoardSize.smallBoard)
             {
-                m_Board[2, 2].Sign = 'O';
-                m_Board[3, 2].Sign = 'X';
-                m_Board[3, 3].Sign = 'O';
-                m_Board[2, 3].Sign = 'X';
+                m_Board[2, 2].Sign = (char)GameUtilities.ePlayerColor.WhitePlayer;
+                m_Board[3, 2].Sign = (char)GameUtilities.ePlayerColor.BlackPlayer;
+                m_Board[3, 3].Sign = (char)GameUtilities.ePlayerColor.WhitePlayer;
+                m_Board[2, 3].Sign = (char)GameUtilities.ePlayerColor.BlackPlayer;
             }
         }
 

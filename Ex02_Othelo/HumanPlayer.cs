@@ -16,10 +16,10 @@ namespace Ex02_Othelo
         private bool m_isPlayerPlaying = false;
         private GameUtilities.ePlayerColor m_PlayerColor;
 
-        // This method ask from the player to play till his input is valid, then it return his move by ref
-        // Example for valid move - "E3", then io_CurrentPlayerColumnMove will hold 4 and io_CurrentPlayerRowMove will hold 2
         public void Play(Board.eBoardSize i_BoardSize, out int io_CurrentPlayerRowMove, out int io_CurrentPlayerColumnMove)
         {
+        // This method ask from the player to play till his input is valid, then it return his move by ref
+        // Example for valid move - "E3", then io_CurrentPlayerColumnMove will hold 4 and io_CurrentPlayerRowMove will hold 2
             string playerMoveString;
             bool isUserRequsetToExit;
 
@@ -39,6 +39,7 @@ namespace Ex02_Othelo
 
         public HumanPlayer(GameUtilities.ePlayerColor i_PlayerColor)
         {
+            // Human player c'tor
             m_PlayerColor = i_PlayerColor;
         }
 
@@ -59,6 +60,7 @@ namespace Ex02_Othelo
 
         public int Score
         {
+            // a propertie for m_PlayerScore
             get
             {
 
@@ -88,6 +90,7 @@ namespace Ex02_Othelo
 
         public bool Active
         {
+            // a propertie for m_isPlayerPlaying
             get
             {
 

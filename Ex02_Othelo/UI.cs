@@ -26,19 +26,6 @@ namespace Ex02_Othelo
             }
         }
 
-        public static void Draw(Board i_GameBoard) // DELETE
-        {
-            // this method recieves a board and drawing it.
-            StringBuilder stringBuilder = new StringBuilder(string.Empty, 36);
-            printFirstLine(i_GameBoard.Size);
-            printLineOfEqualSign(i_GameBoard.Size);
-            for (int i = 0; i < (int)i_GameBoard.Size; i++)
-            {
-                printBoardRowData(i_GameBoard, i);
-                printLineOfEqualSign(i_GameBoard.Size);
-            }
-        }
-
         private static void printPlayersScore(HumanPlayer i_WhiteHumanPlayer, HumanPlayer i_BlackHumanPlayer, PcPlayer i_BlackPCPlayer)
         {
             string whitePlayerName, blackPlayerName;
@@ -49,8 +36,7 @@ namespace Ex02_Othelo
             whitePlayerScore = i_WhiteHumanPlayer.Score;
             blackPlayerScore = i_BlackHumanPlayer.Active == true ? i_BlackHumanPlayer.Score : i_BlackPCPlayer.Score;
 
-            string scoreMessage = string.Format("{0} : {1}              {2} : {3}",
-                whitePlayerName, whitePlayerScore, blackPlayerName, blackPlayerScore);
+            string scoreMessage = string.Format("{0} : {1}              {2} : {3}", whitePlayerName, whitePlayerScore, blackPlayerName, blackPlayerScore);
             Console.WriteLine(scoreMessage);
         }
 
@@ -86,6 +72,17 @@ namespace Ex02_Othelo
             }
 
             Console.WriteLine(lineOfMatrixData);
+        }
+
+        public static void InformPlayerItMoveIsntAnOption(GameUtilities.ePlayerColor i_PlayerTurn)
+        {
+            // this method infrom the player that is move is not in the player option and ask him to pick other move.
+            string playerColor = GameUtilities.ePlayerColor.BlackPlayer == i_PlayerTurn ? "Black" : "White";
+
+            ClearTwoLines();
+            Console.WriteLine("{0} player, your choice is not an option, please pick other move.", playerColor);
+            System.Threading.Thread.Sleep(3000);
+            ClearTwoLines();
         }
 
         private static void printFirstLine(Board.eBoardSize boardSize)
@@ -154,6 +151,7 @@ namespace Ex02_Othelo
 
         private static bool isUserChoiceValid(string userChoiceString)
         {
+            // this method is checking if the user choise is valid and return true if it is.
             bool isValidLength, isValidChar, result;
 
             isValidLength = userChoiceString.Length == 1;
@@ -200,18 +198,19 @@ namespace Ex02_Othelo
         {
             // this method is recieving the player that should play now and asking the player to play
             bool isMoveValidate;
-            string playerMoveInput, currentPlayerName, currentPlayerColor, currentPlayerSign;
+            string playerMoveInput, currentPlayerName, currentPlayerColor;
+            char currentPlayerSign;
 
             currentPlayerName = i_PlayerName;
             if (i_PlayerTurn == GameUtilities.ePlayerColor.BlackPlayer)
             {
                 currentPlayerColor = "Black";
-                currentPlayerSign = "X";
+                currentPlayerSign = (char)GameUtilities.ePlayerColor.BlackPlayer;
             }
             else
             {
                 currentPlayerColor = "White";
-                currentPlayerSign = "O";
+                currentPlayerSign = (char)GameUtilities.ePlayerColor.WhitePlayer;
             }
 
             Console.WriteLine(string.Format("{0} player {1}, please play your turn => {2}.", currentPlayerColor, currentPlayerName, currentPlayerSign));
@@ -220,6 +219,7 @@ namespace Ex02_Othelo
             isMoveValidate = isPlayerStringValid(playerMoveInput, i_CurrentBoardSize);
             while (!isMoveValidate)
             {
+                ClearTwoLines();
                 SyntaxIsntValid();
                 playerMoveInput = Console.ReadLine();
                 playerMoveInput = playerMoveInput.ToUpper();
@@ -231,6 +231,7 @@ namespace Ex02_Othelo
 
         private static bool isPlayerStringValid(string i_PlayerMoveInput, Board.eBoardSize i_CurrentBoardSize)
         {
+            // this method is checking if the player string is valid and return true if it is.
             bool isFirstCharValid, isSecondCharValid, isValidLength, result;
 
             if (i_PlayerMoveInput == "Q")
@@ -257,6 +258,7 @@ namespace Ex02_Othelo
 
         private static bool isSecondCharIsAValidNumber(char i_CharToValidate, Board.eBoardSize i_CurrentBoardSize)
         {
+            // this method checks if the second char of the input is valid and return true if it is.
             bool result;
 
             if (i_CurrentBoardSize == Board.eBoardSize.bigBoard)
@@ -273,6 +275,7 @@ namespace Ex02_Othelo
 
         private static bool isFirstCharIsAValidLetter(char i_CharToValidate, Board.eBoardSize i_CurrentBoardSize)
         {
+            // this method checks if the first char of the input is valid and return true if it is.
             bool result;
 
             if (i_CurrentBoardSize == Board.eBoardSize.bigBoard)
@@ -296,6 +299,7 @@ namespace Ex02_Othelo
         public static void InformTurnHasBeenChanged(GameUtilities.ePlayerColor i_PlayerTurn)
         {
             // this method is informing the players that the turn has been changed.
+            Console.WriteLine("{0} player, the enemy has no options. Its now your turn again", i_PlayerTurn);
         }
 
         public static void DeclareWinner(int i_WhitePlayerScore, int i_BlackPlayerScore, GameUtilities.ePlayerColor i_WinnerColor)
@@ -352,9 +356,27 @@ namespace Ex02_Othelo
         public static void DeclareDraw(int i_WhitePlayerScore, int i_BlackPlayerScore)
         {
             // this method declare on draw score situation
-            string scoreAndDeclareDrawMessage = string.Format("White player score: {1}{0}Black player score: {2}{0} Their is a DRAW!",
+            string scoreAndDeclareDrawMessage = string.Format("White player score: {1}{0}Black player score: {2}{0} There is a DRAW!",
                 Environment.NewLine, i_WhitePlayerScore, i_BlackPlayerScore);
             Console.WriteLine(scoreAndDeclareDrawMessage);
+        }
+
+        private static void ClearCurrentConsoleLine()
+        {
+            // this method clear current line in console
+            int currentLineCursor = Console.CursorTop;
+            Console.SetCursorPosition(0, Console.CursorTop);
+            Console.Write(new string(' ', Console.WindowWidth));
+            Console.SetCursorPosition(0, currentLineCursor);
+        }
+
+        private static void ClearTwoLines()
+        {
+            // this method clear the last two lines in console.
+            Console.SetCursorPosition(0, Console.CursorTop - 1);
+            ClearCurrentConsoleLine();
+            Console.SetCursorPosition(0, Console.CursorTop - 1);
+            ClearCurrentConsoleLine();
         }
     }
 }

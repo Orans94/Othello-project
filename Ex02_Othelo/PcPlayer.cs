@@ -12,15 +12,14 @@ namespace Ex02_Othelo
 
         public void Play(Board i_GameBoard, GameManager.eGameMode gameMode, out int io_CurrentMoveRowIndex, out int io_CurrentMoveColumnIndex)
         {
-            Random randomMove = new Random();
-            Cell randomedCell = new Cell();
-
+            // this method is activating PCPlay method from AI class and calls a message from UI
             UI.PCIsThinkingMessage();
             AI.PCPlay(i_GameBoard, out io_CurrentMoveRowIndex, out io_CurrentMoveColumnIndex);
         }
 
         public int Score
         {
+            // a propertie for m_PlayerScore
             get
             {
 
@@ -35,6 +34,7 @@ namespace Ex02_Othelo
 
         public string Name
         {
+            // a propertie for m_PlayerName
             get
             {
 
@@ -44,6 +44,7 @@ namespace Ex02_Othelo
 
         public bool Active
         {
+            // a propertie for m_isPlayerPlaying
             get
             {
 
