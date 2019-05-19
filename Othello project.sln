@@ -3,7 +3,12 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28307.572
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ex02_Othelo", "Ex02_Othelo\Ex02_Othelo.csproj", "{3F17BCF0-BF9A-4AB1-BF0F-DC8B809308C9}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{4C6B4074-D959-4B6E-81FF-A0510600A862}"
+	ProjectSection(SolutionItems) = preProject
+		Report.txt = Report.txt
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ex02_Othello", "Ex02_Othello\Ex02_Othello.csproj", "{3F17BCF0-BF9A-4AB1-BF0F-DC8B809308C9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
